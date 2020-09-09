@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			101
+// @version   			102
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -187,13 +187,14 @@ function newpass(paw){
   
   
    for (var i = 0; i < paw.length; i++) {
-     var techpas = paw[i].split('file link')[0] ? paw[i].split('file link')[0]:paw[i];
-     techpas =techpas.split(' ');
+    try{ var techpas = paw[i].split('file link')[0] ? paw[i].split('file link')[0]:paw[i]; } catch(e){ var techpas = paw[i];}
+     try{techpas =techpas.split(' ');}catch(e){ var techpas =techpas;}
             if(techpas.length==0){techpas= paw[i];}
             else if(techpas.length>2){techpas=techpas[0];}
             else{techpas =techpas[0]+(techpas[1] ? techpas[1]:'');}
      
-     if((typeof techpas)=='string' && !techpas.match(/(dlfree\.html|viewtopic\.|code:\ssele|\s\s\s|to\scopy|other\sis\sspecified|for\sall|Same\sas|hot\slove|please\?\n?)/i) && beforepw !=techpas && techpas.length>2){
+     if((typeof techpas)=='string' && !techpas.match(/(dlfree\.html|viewtopic\.|code:\ssele|\s\s\s|to\scopy|other\sis\sspecified|for\sall|Same\sas|hot\slove|please\?\n?|Has\sthank|Welcome|does)/i) && beforepw !=techpas && techpas.length>3){
+       techpas=techpas.replace(/(password\:?|PW\:)/i,'');
      txt+=' <span style="padding-right: 18px; color: red;user-select: none;"><code class="btn" data-clipboard-text="'+techpas+'">'+techpas+'</code></span>';
        beforepw=techpas;
      }
@@ -214,12 +215,14 @@ function newhtml(htm,pawc){
   for (var i = 0; i < htm.length; i++) {
       
         for (var c = 0; c < htm[i].length; c++) {
-        if(htm[i][c] && htm[i][c].match(/(image|jpg|jpeg|png)/i)){
-          htmm+='<img onerror="this.parentNode.removeChild(this);" style="margin: 10px auto 15px;display:inline-grid;" border="0" src="'+(htm[i][c])+'" width="33%"/>';
+          
+          var curi=htm[i][c];
+        if(curi && curi.match(/(image|jpg|jpeg|png)/i)){
+          htmm+='<img onerror="this.parentNode.removeChild(this);" style="margin: 10px auto 15px;display:inline-grid;" border="0" src="'+(curi)+'" width="33%"/>';
         }
-        else if(htm[i][c] && !htm[i][c].match(/(dlfree\.|viewtopic|posting)/i)){
-        
-          htmm+='<a style="display: block; font-size: 250%; color: #03A9F4;width: fit-content;" href="'+(htm[i][c])+'" target="_blank">'+(htm[i][c])+'</a>';
+        else if(curi && !curi.match(/(dlfree\.|viewtopic|posting|\?file\=\/l\?file\=\/)/i) && curi!='dl.free.fr' ){
+                                if(!curi.match(/http(s)?/i)) {curi='http://'+curi;}
+          htmm+='<a style="display: block; font-size: 250%; color: #03A9F4;width: fit-content;" href="'+(curi)+'" target="_blank">'+(curi)+'</a>';
         }
         
        
@@ -241,12 +244,13 @@ function newhtml(htm,pawc){
           var passwordbox=[], countpw=0;
           $(dochtml).find('a').text($(dochtml).find('a').attr('href'));
           $(dochtml).find('br').remove();
-          const regix= new RegExp(/(password\sis|password|the\spassword|PW\sfor\sfiles|with\spassword|PW)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?].{6,})/i);
+          const regix= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]].{6,})/i);
+          const regixgi= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]].{6,})/gi);
           titlethread[ttcount++]=dochtml.querySelector('h3.first').innerText;
          
           
           var password_profile2 =dochtml.querySelectorAll('.signature').forEach(function(cpost) {
-            var findpw =$(dochtml).contents().text().match(regix);
+            var findpw =$(dochtml).contents().text().match(regixgi);
                if(findpw){passwordbox[countpw++]=findpw[5] ? findpw[5]: findpw[4] ? findpw[4] : findpw;}
      //       console.log(findpw);
           });
@@ -276,11 +280,11 @@ function newhtml(htm,pawc){
                    if(inb){ totalurl=inb.map(function (i) {var ic=i.substring(0, 8); if(ic.length==8){console.log(ic); return 'http://dl.free.fr/getfile.pl?file=/' + ic;}});}
                     
 
-          } 
+          } else{            var vpost = new DOMParser().parseFromString(post.innerHTML, "text/html");}
             
-           var uri= post.innerHTML.match(/((http\:\/\/|https\:\/\/|www\.)?([a-z0-9\-\_\.]+)(\.com|\.to|\.net|\.io|\.org|\.li|\.fr|\.onion)((?!\/viewtopic\.|\.\.\.|dlfree\.|\/show\?i\=)([a-z0-9\&\%\$\!\?\@\.\=\_\-\/\\]+)))/ig);
+           var uri= $(vpost).contents().html().match(/((http\:\/\/|https\:\/\/|www\.)?([a-z0-9\-\_\.]+)(\.com|\.to|\.net|\.nl|\.io|\.org|\.li|\.fr|\.ro|\.onion)((?!\/viewtopic\.|\.\.\.|dlfree\.|\/show\?i\=)([a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};:\\|,.\/?]+)))/ig);
+              if($(vpost).contents().html().match(/(getfile\.pl)/i)){uri=uri.map(function (namp) {if(namp.match(/(getfile\.pl)/i) && namp.length>7){return 'http://dl.free.fr/getfile.pl?file=/' + namp.substr(namp.length - 8);} else{ return namp;}});}
             
-               if(post.innerHTML.match(/getfile\.pl/i)){uri=uri.map(function (i) {if(i.match(/dl\.free\.fr/)){var ic=i.split('.pl?file=/')[1]; if(ic){ return 'http://dl.free.fr/getfile.pl?file=/' + ic;} else{ return i;}}else{ return i;}});}
             if(totalurl && uri){
                totalurl=  uri.concat(totalurl).unique().filter(Boolean);
             } else  if (totalurl){totalurl = totalurl.unique().filter(Boolean);}
