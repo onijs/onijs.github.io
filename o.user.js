@@ -15,7 +15,7 @@
 // @resource    JQ_354    https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js
 // @require     https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js
 // @resource    jqUI_CSS    https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css
-// @version     0
+// @version     455
 // @copyright   HOAKHUYA
 // @homepage    https://hoakhuya.com
 // @author       HOAKHUYA
