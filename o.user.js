@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			102
+// @version   			103
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -193,10 +193,13 @@ function newpass(paw){
             else if(techpas.length>2){techpas=techpas[0];}
             else{techpas =techpas[0]+(techpas[1] ? techpas[1]:'');}
      
-     if((typeof techpas)=='string' && !techpas.match(/(dlfree\.html|viewtopic\.|code:\ssele|\s\s\s|to\scopy|other\sis\sspecified|for\sall|Same\sas|hot\slove|please\?\n?|Has\sthank|Welcome|does)/i) && beforepw !=techpas && techpas.length>3){
-       techpas=techpas.replace(/(password\:?|PW\:)/i,'');
-     txt+=' <span style="padding-right: 18px; color: red;user-select: none;"><code class="btn" data-clipboard-text="'+techpas+'">'+techpas+'</code></span>';
-       beforepw=techpas;
+     if((typeof techpas)=='string' && !techpas.match(/(dlfree\.html|viewtopic\.|code:\ssele|\s\s\s|to\scopy|other\sis\sspecified|for\sall|Same\sas|hot\slove|please\?\n?|Has\sthank|Welcome|does|with\s|insignature|in\ssignature)/i) && techpas.length>3){
+        techpas=techpas.replace(/(password\:?\s?|PW\:?\s?)/i,'');
+       if(beforepw !=techpas){
+        beforepw=techpas;
+        txt+=' <span style="padding-right: 18px; color: red;user-select: none;"><code class="btn" data-clipboard-text="'+techpas+'">'+techpas+'</code></span>';
+     }
+       
      }
      
    }
@@ -205,6 +208,7 @@ function newpass(paw){
   return txt;
 }
 function newhtml(htm,pawc){
+      beforepw='';
 
        var passw = newpass(pawc);
         var title=titlethread[nowget];
@@ -244,14 +248,16 @@ function newhtml(htm,pawc){
           var passwordbox=[], countpw=0;
           $(dochtml).find('a').text($(dochtml).find('a').attr('href'));
           $(dochtml).find('br').remove();
-          const regix= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]].{6,})/i);
-          const regixgi= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]].{6,})/gi);
+          const regix= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\`].{6,})/i);
+          const regii= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW)(\:+)?(\s+)?(\n+)?(.*.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\%\$\)\(\`].{6,})/ig);
           titlethread[ttcount++]=dochtml.querySelector('h3.first').innerText;
          
           
           var password_profile2 =dochtml.querySelectorAll('.signature').forEach(function(cpost) {
-            var findpw =$(dochtml).contents().text().match(regixgi);
-               if(findpw){passwordbox[countpw++]=findpw[5] ? findpw[5]: findpw[4] ? findpw[4] : findpw;}
+            var findpw =$(dochtml).contents().text().match(regix);
+            var findpv =$(dochtml).contents().text().match(regii);
+               passwordbox[countpw++]=findpw[5] ? findpw[5]: findpw[4] ? findpw[4] : findpw;
+               passwordbox[countpw++]=findpv[5] ? findpv[5]: findpv[4] ? findpv[4] : findpv;
      //       console.log(findpw);
           });
 
@@ -266,8 +272,10 @@ function newhtml(htm,pawc){
             
           if ($(post).text().match(regix)){
             var findpw1 =$(post).contents().text().match(regix);
+            var findpwa =$(post).contents().text().match(regii);
             passwordbox[countpw++]=findpw1[5] ? findpw1[5]: findpw1[4] ? findpw1[4] : findpw1;
-            passwordbox.reverse(); 
+            passwordbox[countpw++]=findpwa[5] ? findpwa[5]: findpwa[4] ? findpwa[4] : findpwa;
+
           }
             
             
