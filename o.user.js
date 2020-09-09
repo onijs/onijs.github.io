@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			1
+// @version   			100
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -22,12 +22,7 @@
 // @copyright   HOAKHUYA.onion
 // @homepage    https://hoakhuya.com
 // @author       HOAKHUYA.onion
-// @include     *://2tgix56pui5j6*.onion/*
-// @include     *://qcuvxeyiyq2em*.onion/*
-// @include     *://qggd5kpmp7ikf*.onion/*
-// @include     *://53skajjzct44r*.onion/*
-// @include     *://nykaduvokglkc*.onion/*
-// @include     *://ozgmavpcbkgcz*.onion/*
+// @include     *://*.onion/*
 // @grant         GM_setClipboard
 // @grant         unsafeWindow
 // @grant         window.close
