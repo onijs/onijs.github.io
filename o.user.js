@@ -47,7 +47,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Pornhub: style fix</li><li style="text-transform: none !important;margin-bottom: 10px;"> module auto update for: greasyfork & openuserjs.</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Cải thiện hiệu xuất, bổ sung một số thuật toán</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
