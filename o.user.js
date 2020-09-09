@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			103
+// @version   			101
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -248,8 +248,8 @@ function newhtml(htm,pawc){
           var passwordbox=[], countpw=0;
           $(dochtml).find('a').text($(dochtml).find('a').attr('href'));
           $(dochtml).find('br').remove();
-          const regix= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\`].{6,})/i);
-          const regii= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW)(\:+)?(\s+)?(\n+)?(.*.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\%\$\)\(\`].{6,})/ig);
+          const regix= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|always)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\`].{6,})/i);
+          const regii= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|always)(\:+)?(\s+)?(\n+)?(.*.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()\_\+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\%\$\)\(\`].{6,})/ig);
           titlethread[ttcount++]=dochtml.querySelector('h3.first').innerText;
          
           
