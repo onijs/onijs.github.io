@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			100
+// @version   			101
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -23,6 +23,10 @@
 // @homepage    https://hoakhuya.com
 // @author       HOAKHUYA.onion
 // @include     *://*.onion/*
+// @include		  *://receive-sms.*/*
+// @include		  *://receive-sms-free.*/*
+// @include		  *://*.histats.com/*
+// @include		  *://*.bestchange.com/*
 // @grant         GM_setClipboard
 // @grant         unsafeWindow
 // @grant         window.close
@@ -68,8 +72,79 @@ String.prototype.ismatch = function (regex) {
 };
 String.prototype.isdomain = function(ismatch){const a =new URL(this.valueOf());const {host, hostname, pathname, port, protocol, search, hash} = a;if(hostname.split('.').length>2){ var mainhostname = `${hostname}`.split('.').slice(1).join('.').replace('.','\\.');} else {var mainhostname =`${hostname}`.replace('.','\\.');} return typeof this.indexOf === 'function' && mainhostname.indexOf(ismatch.replace('.','\\.')) === 0;}
 const hkparseUrl = (string, prop) =>  {const a =new URL(string);const {host, hostname, pathname, port, protocol, search, hash} = a;var mainhostname = `${hostname}`.split('.').slice(1).join(); const origin = `${protocol}//${hostname}${port.length ? `:${port}`:''}`;return prop ? eval(prop) : {origin, host, hostname, mainhostname, pathname, port, protocol, search, hash}}
+function insertAfter(referenceNode, newNode) {referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);}
 //________________________________________________________________________
 var onionJS = {
+//________________________________________________________________________
+    receivesms_net: function(){
+    if(location.href.isdomain('receive-sms.cc') || location.href.isdomain('receive-sms-free.net')){
+
+      window.addEventListener("DOMContentLoaded", function(event) { 
+        $(".adsbygoogle").parents('.table-hover').remove();
+        $('.border-bottom.table-hover:not(".bg-messages")').remove();
+      });
+
+      document.addEventListener("DOMContentLoaded", function(event) { 
+        $(".adsbygoogle").parents('.table-hover').remove();
+        $('.border-bottom.table-hover:not(".bg-messages")').remove();
+      });
+    }
+    },
+//________________________________________________________________________
+    histats_com: function(){
+    if(location.href.isdomain('histats.com')){
+
+      GM_addStyle('body{max-width:80%;margin:0 auto;}.Content,div>table,.BarCompare{width:99% !important;}.ttip{max-width: 492px !important;}#div_cnt_SUM_recent .HovflwCH{width: calc(100% - 250px) !important;}#div_cnt_SUM_visits .HovflwCH,#div_cnt_SUM_referer .HovflwCH{width: 100% !important;}#div_Ls_map{display:none;} .RowLine{max-width:unset;}');
+      document.querySelector("#HISTATS_statsmodule_container").addEventListener('DOMNodeInserted', function(e) {
+        if (document.querySelector('td[width="200"]') && document.querySelector('td[width="10"]')){
+
+          document.querySelector('td[width="10"],td[width="200"]').remove();
+          document.querySelector('td[width="10"],td[width="200"]').remove();
+        }
+      });
+    
+    }
+    },
+//________________________________________________________________________
+    bestchange_com: function(){
+    	if (this.url.isdomain('bestchange.com') && this.url.match(/([a-z0-9]+)\-to\-([a-z0-9]+)/) ){
+  //          document.querySelectorAll('script[src*="main"]').forEach(e => e.parentNode.removeChild(e));
+         
+                                
+
+                var mex = document.createElement("li");
+                    mex.innerHTML='<a class="dome" href="/index.php">Home</a><i></i>';
+                    document.querySelector('.tabs.g-tabs').appendChild(mex);
+          insertAfter(document.querySelector("#content_notify"), (document.getElementById('headinfo')));
+          GM_addStyle('#label_text{margin: 2px 0 -3px 1px; font-size: 14px; color: #505050; line-height: 17px;}body{height:100%;}.dome{margin: 0;padding: 0;padding-top: 3px;}thead small{vertical-align: middle; top: -2px; position: relative;}#undertable,hr,.pagesavelinks{text-align: center;}.wrapper{width:100%} #content_table thead .info #update_image{left: 154px; position: relative; top: 6px; width:32px;height:32px;} #content_table thead .info{width: 0px;position: absolute;}#content_table thead .scheme{position: relative;    height: 47px;} #content_calc{    margin-bottom: 34px;margin-top: 20px;} a.rwa table .end{display:none;}');
+          GM_addStyle('#content_table tbody tr{height: 47px;} #content_table #label_details tbody tr{height:unset;} #content_table .sd td{height: 60px;} #content_table .sd .ticket .down{background:unset;}#twostep_details{background: url(images/details.png) left -216px no-repeat;}.content #undertable .m-hint{font-size:18px;line-height: 1.2;} .m-blue,.pagesavelinks{display:none;} .tabs li{font-size: 16px;} #twostep_details #twostep_text tbody{font-size: 92%;} #twostep_details #twostep_text{font-size: 13px;} #content_table .lbpl{position: absolute; right: 2px; top: 0px; cursor: default; zoom: 1.3; opacity: 1; } .exinfo{transform: scale(1.7);} #content_table .sd .ticket .desc small { color: #968f8f !important; }#content_table .sd .ticket .desc{padding: 1px 0 0 22px; font-size: 22px; line-height: 20px; } tr.sd .font13px { color: cornflowerblue; } #content_table tr.sd { background: unset; background-color: #3f3f3f; } #content_table .sd td div { background: unset; background-color: #3f3f3f; } #content_table .sd .ticket { background: #3f3f3f; background-color: #3f3f3f; width: unset !important; } dl { display: flex; justify-content: center; align-items: center; position: relative;     right: -255px;     font-size: 118%;    margin: 1.6em 0 1em 0;} dd { margin-left: 0.2em; margin-right: 1.5em; } #headinfo { display: flex; justify-content: center; align-items: center; } #update_image { width: 32px; height: 32px; } #content_table .ir { visibility: hidden; } #content_table .ir.bi { visibility: unset; } #content_table thead .scheme #update_image { left: 9px; top: 7px; } .last .bj.bp, .last .ar.rwa { border-bottom-left-radius: unset !important; } .scheme, .changer { border-top-left-radius: 11px; } #content_table tr:hover .fm1 { top: -12px; } #content_table .sd .ticket .desc .bi{font-size: 17px; padding: 0;} #content_table .fm{    height: 26px;    font-size: 80%;} #content_table .fm2 { top: -15px; } .last .bj, .last .ir.bi { border-bottom-left-radius: 11px !important; } .last .rw, .last .ar.rwa { border-bottom-right-radius: 11px; } .bj.reviews.end, .ar.arp.reserve.end { border-top-right-radius: 11px; padding-right: 5px; } #content_table .arp { text-align: start; } #content_table .io { width: unset; background: unset; } #content_table .ir, #content_table .last .rw .end { background: unset; } td.rw, td.bj, td.bi, td.arp, td.scheme, td.currate, td.rwa { background: #1C1E20 !important; } #rates_block { text-align: start; } #content_table thead .reviews, #content_table thead .reserve { padding: unset; padding-right: 6px; } #content_calc, #content_notify { border-radius: 11px; color: teal; } #content_table { width: 100% } #content_table tbody td .pa { color: #9e1313 } #content_table tbody .rwa { color: red; } #content_table .bi { text-align: left; } #content_table thead td a { color: #f2a746; text-decoration: unset; } .bi { color: #41ec38 !important; } #content_table thead td { background: #000; color: bisque;} body, .c-block { background: #000; color: bisque; } .content { padding: 15px 15px 0 15px; } .c-block .c-inner, .c-block .c-wrap, .content .m-rate .bottom, .content #undertable div, #content_calc .inner, #content_notify .inner, .inner, #content_table .last .rwa .ts .end { background: unset; } #content_table tbody td, td.ir.bi { border-bottom: 1px solid #fff; } .rwl, .rwr.pos, .del, .end, #content_table tbody tr.last td, table.ts tr td { border-bottom: unset !important; border-bottom-left-radius: unset; } #content_table tbody td { padding-bottom: 5px; padding-top: 5px; background: unset; height: 30px; max-height: 30px } #content_table thead { font-size: 28px } #content_table tbody { font-size: 26px } .tabs li a { color: #ca0582; text-transform: uppercase; } li.active>a>span { color: seagreen; font-weight: bold; text-transform: uppercase; } .tabs li a span, .tabs li a, .tabs li i { background: unset; } ul.tabs.g-tabs, #content_rates { text-align: center; width: 100%; justify-content: center; margin: 0 0 auto; justify-items: center; display: flex; } div.content { width: 100% !important; } , .c-inner, .c-block, .c-block, .c-inner, .c-wrap, div { background: unset !important; background-image: unset !important; } .content .m-rate { background-image: unset !important; } .stretch_label .sl5 { background-color: #eeeeee !important; white-space: nowrap !important; } .stretch_label td { border-bottom: unset !important; padding-top: unset !important; } #twostep_text table td.bi { background: unset !important; } #twostep_text table td.bi { background: unset !important; } #twostep_text table .active td.bi { background-color: #ffffff !important; }.stretch_label .sl4 { width: 19px !important; min-width: 19px !important; background-position: left -18px !important; }.stretch_label .sl6 { position: relative; } #twostep_text .bi{color:#3859ec !important}');
+        
+          document.querySelectorAll('hr,.sidebar,.header,.footer,.intro,.top,.above,.m-blue,.text').forEach(function(xj) { if(xj.className !=="hkjquery"){xj.parentNode.removeChild(xj);}});
+           //  document.querySelector('#content_calc').insertBefore(document.querySelector('#content_stats'),document.querySelector('#content_calc').firstChild);
+            insertAfter(document.getElementById("content_calc"), (document.getElementById('content_stats')));
+            //document.querySelector('#content_calc').classList.add('hide');
+                  var cods =  document.createElement('script');
+                  cods.src='js/main98.js';
+              //      document.head.appendChild(cods);
+                        document.getElementById("tab_rates").addEventListener("click", function(){ document.getElementById("update_image").src=loadingimg; });
+                        document.getElementById("tab_calc").addEventListener("click", function(){ document.getElementById("update_image").src=loadingimg; });
+                        document.getElementById("tab_notify").addEventListener("click", function(){ document.getElementById("update_image").src=loadingimg; });
+                        document.getElementById("tab_twostep").addEventListener("click", function(){ document.getElementById("update_image").src=loadingimg; });
+                        document.getElementById("tab_stats").addEventListener("click", function(){ document.getElementById("update_image").src=loadingimg; });
+
+                        document.addEventListener('readystatechange', event => {
+                           for (var i = 1; i < 99999; i++){window.clearInterval(i);}
+                          setInterval(function(){document.getElementById("update_image").src=loadingimg;update_rates();document.getElementById("update_image").src=loadingimg;document.getElementById("calc_button").disabled=false }, 5000)
+                        })
+                    
+          var nckc = document.createElement('script');     
+          nckc.innerHTML="function std(id) { show_two_box = true; var obj = document.getElementById('eb' + id); var info_box = document.getElementById('twostep_details'); if (!info_box) { info_box = document.createElement('div'); info_box.id = 'twostep_details'; info_box.className = 'hide'; info_box.innerHTML = '<div id=\"twostep_text\"></div><div class=\"inner\"></div>'; } document.body.appendChild(info_box); var x = 0, y = 0; while (obj) { x += parseInt(obj.offsetLeft); y += parseInt(obj.offsetTop); obj = obj.offsetParent; } info_box.style.left = Math.round(x - 153) + 'px'; info_box.style.top = Math.round(y + 22) + 'px'; document.getElementById('twostep_text').innerHTML = document.getElementById('ed' + id).innerHTML; info_box.className = ''; }";
+          document.head.appendChild(nckc);
+              
+        }
+
+    },
+//________________________________________________________________________
     any_onion: function(){
     if(location.href.match(/\.onion\/viewforum\.php/i)){
 
@@ -284,12 +359,7 @@ GM_xmlhttpRequest({
                 document.querySelector('#videoShow,#main-container').setAttribute('id','d54d');
                 }
 		    
-           } else {
-        GM_registerMenuCommand('Report issue', gmclixclick_issuse);
-        GM_registerMenuCommand('Write a review', gmclixclick_treview);
-
-       }
-    
+           } 
       if (newversion>nowversion && localStorage.getItem('update_remind')<curent){
       try{var newupdatetxt = response.responseText.match(/\/\/UDT\#\!(.+)$/im)[0].replace("//UDT#!","");} catch(e){var newupdatetxt='<li>Improved script</li>';}
       try{var updateurli = response.responseText.match(/\/\/DUR\#\!(.+)$/im)[0].replace("//DUR#!","");} catch(e){var updateurli='https://github.com/onijs/onijs.github.io/raw/master/o.user.js?v=' + new Date().getTime();}
@@ -331,6 +401,9 @@ init: function () {
     	this.url = location.href;
 		this.appupdate();
 		this.any_onion();
+		this.histats_com();
+		this.bestchange_com();
+		this.receivesms_net();
 
     }
    
