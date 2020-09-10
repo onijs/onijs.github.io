@@ -167,7 +167,7 @@ var s= document.createElement('form'); s.target='_blank';
 } 
 if($(this).attr('href').match(/datafilehost\.com\/d/)){
 var newherf = $(this).attr('href').replace('https://www.datafilehost.com/d/','http://www.datafilehost.com/get.php?file=');
-  GM_openInTab(newherf);
+  window.open(newherf);
 
 
 }
