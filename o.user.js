@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			110
+// @version   			111
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -146,6 +146,35 @@ var onionJS = {
     },
 //________________________________________________________________________
     any_onion: function(){
+//_______________________________________________
+$( "body" ).on( "click", ".hkautoload", function(e) {
+  e.preventDefault();
+
+//var fileid =  $(this).attr('href').split('/').pop();
+  
+if($(this).attr('href').match(/free\.fr/)){
+var fileid = $(this).attr('href').substr($(this).attr('href').length - 8);
+//alert(fileid);
+var s= document.createElement('form'); s.target='_blank';
+  s.className='ONLIYONESUV';
+  s.setAttribute('method','post');
+  s.setAttribute('action','http://dl.free.fr/_getfile.pl');
+  var i= document.createElement('input');
+  i.name='file'; i.setAttribute('value','/'+fileid);
+  s.appendChild(i);
+  document.body.appendChild(s); s.submit();
+ document.querySelectorAll('.ONLIYONESUV').forEach(el=>el.remove());
+} 
+if($(this).attr('href').match(/datafilehost\.com\/d/)){
+var newherf = $(this).attr('href').replace('https://www.datafilehost.com/d/','http://www.datafilehost.com/get.php?file=');
+  GM_openInTab(newherf);
+
+
+}
+
+
+})
+
     if(location.href.match(/\.onion\/viewforum\.php/i)){
 
     var listthread = [];
@@ -179,8 +208,10 @@ Array.prototype.unique = function() {
 
     return a;
 };
+      
+//_______________________________________________
 
-
+      
 function newpass(paw){
   if(paw.length>1){ var txt='<div class="pws" style="font-size: 192%;user-select: none;margin-top: 15px;"> Password list: ';} else{ var txt='<div class="pws" style="font-size: 192%;user-select: none;margin-top: 15px;"> Password: ';}
  
@@ -226,7 +257,8 @@ function newhtml(htm,pawc){
         }
         else if(curi && !curi.match(/(dlfree\.|viewtopic|posting|\?file\=\/l\?file\=\/)/i) && curi!='dl.free.fr' ){
                                 if(!curi.match(/http(s)?/i)) {curi='http://'+curi;}
-          htmm+='<a style="display: block; font-size: 250%; color: #03A9F4;width: fit-content;" href="'+(curi)+'" target="_blank">'+(curi)+'</a>';
+                                if (curi.match(/free\.fr/)){ var classr='hkautoload';} else{var classr='noautoload';}
+          htmm+='<a class="'+classr+'" style="display: block; font-size: 250%; color: #03A9F4;width: fit-content;" href="'+(curi)+'" target="_blank">'+(curi)+'</a>';
         }
         
        
