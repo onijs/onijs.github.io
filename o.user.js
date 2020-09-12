@@ -260,8 +260,8 @@ function newhtml(htm,pawc,justadd){
   */
   
     var passw = newpass(pawc);
-    if (title.match(/re\:\s/i)){var countdpaeg = fepage;var addtitle="Trang "+(++countdpaeg);} else{var addtitle='';}
-    var trhtmm='<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><a style="width: fit-content;" onclick="window.open(\''+listthread[nowget]+'\', \'_blank\', \'toolbar=yes, location=yes, status=yes, menubar=yes, scrollbars=yes\');" href="JavaScript:void(0)" target="_blank">'+title+' '+addtitle+'</a></span>';
+    if (title.match(/re\:\s/i) || fepage>1){var tipdostart=parseInt(fepage);var countdpaeg = fepage;var addtitle="Trang "+(++countdpaeg); var linkaddstart='&start='+(tipdostart*8);} else{var addtitle='';var linkaddstart='';}
+    var trhtmm='<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><a style="width: fit-content;" onclick="window.open(\''+(listthread[nowget])+linkaddstart+'\', \'_blank\', \'toolbar=yes, location=yes, status=yes, menubar=yes, scrollbars=yes\');" href="JavaScript:void(0)" target="_blank">'+title+' '+addtitle+'</a></span>';
 
     for (var i = 0; i < htm.length; i++) {
       
