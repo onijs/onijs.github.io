@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			116
+// @version   			117
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -47,7 +47,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Xoá các blockquote trong DOM trước khi xử lý chuỗi</li><li style="text-transform: none !important;margin-bottom: 10px;"> Bổ sung thuật toán nhận diện mật khẩu</li><li style="text-transform: none !important;margin-bottom: 10px;"> Link bài viết có nhiều comment hoặc các link bài được đính sẽ không hoạt động ở chế độ autofetch</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Lấy nội dung từ nhiều trang comment</li><li style="text-transform: none !important;margin-bottom: 10px;"> Xoá các blockquote trong DOM trước khi xử lý chuỗi</li><li style="text-transform: none !important;margin-bottom: 10px;"> Bổ sung thuật toán nhận diện mật khẩu</li><li style="text-transform: none !important;margin-bottom: 10px;"> Link bài viết có nhiều comment hoặc các link bài được đính sẽ không hoạt động ở chế độ autofetch</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
@@ -183,7 +183,7 @@ var newherf = $(this).attr('href').replace('https://www.datafilehost.com/d/','ht
     var nowpase=0;
     var dp=true;
     var beforepw='';
-
+    var fepage=0;
 function onlyUnique(value, index, self) { 
     return self.indexOf(value) === index;
 }
@@ -233,25 +233,35 @@ function newpass(paw){
             if(techpas.match(/http\:\/\//i)){techpas = techpas.split('http://')[0];}
         beforepw=techpas;
         txt+=' <span style="padding-right: 18px; color: red;user-select: none;"><code class="btn" data-clipboard-text="'+techpas+'">'+techpas+'</code></span>';
-     }
+     } 
        
      }
      
    }
-  
+  if(txt.match(/data\-clipboard/)){
   txt+='</div></div>';
   return txt;
+  } else { return '';}
 }
-function newhtml(htm,pawc){
+function newhtml(htm,pawc,justadd){
       beforepw='';
 
-       var passw = newpass(pawc);
         var title=titlethread[nowget];
         var imgd='';
         var htmm='';
       //  console.log(htm);
+  /*
+  if(justadd=='no'){
+       var passw = newpass(pawc);
         var trhtmm='<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><a style="width: fit-content;" onclick="window.open(\''+listthread[nowget]+'\', \'_blank\', \'toolbar=yes, location=yes, status=yes, menubar=yes, scrollbars=yes\');" href="JavaScript:void(0)" target="_blank">'+title+'</a></span>';
-  for (var i = 0; i < htm.length; i++) {
+  } else{var trhtmm='';var passw='';}
+  */
+  
+    var passw = newpass(pawc);
+    if (title.match(/re\:\s/i)){var countdpaeg = fepage;var addtitle="Trang "+(++countdpaeg);} else{var addtitle='';}
+    var trhtmm='<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><a style="width: fit-content;" onclick="window.open(\''+listthread[nowget]+'\', \'_blank\', \'toolbar=yes, location=yes, status=yes, menubar=yes, scrollbars=yes\');" href="JavaScript:void(0)" target="_blank">'+title+' '+addtitle+'</a></span>';
+
+    for (var i = 0; i < htm.length; i++) {
       
         for (var c = 0; c < htm[i].length; c++) {
           
@@ -268,9 +278,9 @@ function newhtml(htm,pawc){
        
         }
       }  
-    if(title){
+    if(title && htmm.match(/(hkautoload|noautoload)/i)){
          $('.forumbg:not(.announcement)').append(trhtmm+htmm+passw);
-    } else{
+    } else if(!title){
       var hefne= document.querySelector('div.pagination ul li.active').nextSibling.nextSibling.querySelector('a').href;
       $('.forumbg:not(.announcement)').append('<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><h2>Hết nội dung [<a href="'+hefne+'">xem trang kế</a>]</h2></div>');
     }
@@ -279,23 +289,25 @@ function newhtml(htm,pawc){
   }
    
 }
-    function getsource(vurl){
+    function getsource(vurl,nextpfi){
         var link=vurl+ '';
         
       $.ajax({type: "GET",url: vurl,
         beforeSend: function(data){
-      //  hnotyf.dismissAll(0);
-        hnotyf.open({duration: 13000,type: 'info',message: '<img id="diladic'+nowget+'" src="https://i.imgur.com/H4Ua1cw.gif">'+titlethread[nowget]+'<span id="xiladic'+nowget+'">...</span>'}); 
+        if(nextpfi=='yub') {var ifde= ++fepage; ifde='trang:'+ifde} else{var ifde='';fepage=0;}
+        hnotyf.open({duration: 13000,type: 'info',message: '<img id="diladic'+(nowget)+'" src="https://i.imgur.com/H4Ua1cw.gif">'+titlethread[nowget]+'<span id="xiladic'+(nowget)+'">...'+ifde+'</span>'}); 
         },
         error: function(data){
           getsource(listthread[nowget]);
         },
         success: function(data, status, xhr){
-        $('img[id="diladic'+nowget+'"]').attr('src','https://i.imgur.com/QCk4sNh.png').attr('style','margin-right: 5px;');
-        $('span[id="xiladic'+nowget+'"]').remove();
+        $('img[id="diladic'+(nowget)+'"]').attr('src','https://i.imgur.com/QCk4sNh.png').attr('style','margin-right: 5px;');
+        $('span[id="xiladic'+(nowget)+'"]').remove();
        
        var prase=[],linkc=0;
          var dochtml = new DOMParser().parseFromString(data, "text/html");
+         try{var nextpages= dochtml.querySelector('div.pagination ul li.active').nextSibling.nextSibling.querySelector('a').href;} catch (e){ var nextpages='';}
+
           var passwordbox=[], countpw=0;
           $(dochtml).find('a').text($(dochtml).find('a').attr('href'));
           $(dochtml).find('br').remove();
@@ -364,13 +376,16 @@ function newhtml(htm,pawc){
           })
           try{var resulturl= prase.unique().filter(Boolean);} catch(e){ console.log('oosp');}
           var resultpw=passwordbox.unique().filter(Boolean);
-        newhtml(resulturl.filter(Boolean).unique(),resultpw);
-
           
-          if(nowget<nowpase){
-            var cso =nowget+1;
+         if(nextpfi=='yub'){newhtml(resulturl.filter(Boolean).unique(),resultpw,'yes');}
+          else{newhtml(resulturl.filter(Boolean).unique(),resultpw,'no');}
+        
+
+          if(nextpages !=""){ getsource(nextpages,'yub');}
+          else if(nowget<nowpase){
+            var cso =++nowget;
             if(listthread[cso]){
-            getsource(listthread[++nowget]);
+            getsource(listthread[cso],'no');
             } else{
                   var hefne= document.querySelector('div.pagination ul li.active').nextSibling.nextSibling.querySelector('a').href;
                   $('.forumbg:not(.announcement)').append('<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><h2>Hết nội dung [<a href="'+hefne+'">xem trang kế</a>]</h2></div>');
