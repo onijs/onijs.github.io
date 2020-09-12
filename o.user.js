@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			113
+// @version   			115
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -58,7 +58,7 @@ eval(GM_getResourceText('JQ_354'));
 var clipboard = new ClipboardJS('.btn');
 
 const notyf = new Notyf({duration: 2300,position: {x: 'center',y: 'center',},types: [{type: 'warning',background: 'orange',icon: false}]});
-const hnotyf = new Notyf({duration: 3000,position: {x: 'right',y: 'bottom',},types: [{type: 'warning',background: 'orange',icon: false}]});
+const hnotyf = new Notyf({duration: 3000,position: {x: 'right',y: 'bottom',},types: [{type: 'warning',background: 'orange',icon: false},{type: 'info',background: '#004d40',icon: false}]});
 
 clipboard.on('success', function(e) {
 notyf.dismissAll();notyf.success('Password copied');
@@ -176,7 +176,7 @@ var newherf = $(this).attr('href').replace('https://www.datafilehost.com/d/','ht
 })
 
     if(location.href.match(/\.onion\/viewforum\.php/i)){
-
+    GM_addStyle('.notyf__toast{width:500px;}.notyf__ripple{max-width:500px;}');
     var listthread = [];
     var titlethread =[], ttcount=0;
     var nowget=0;
@@ -279,12 +279,20 @@ function newhtml(htm,pawc){
    
 }
     function getsource(vurl){
-  
+        var link=vurl+ '';
+        
       $.ajax({type: "GET",url: vurl,
+        beforeSend: function(data){
+      //  hnotyf.dismissAll(0);
+        hnotyf.open({duration: 8000,type: 'info',message: '<img id="diladic'+nowget+'" src="https://i.imgur.com/H4Ua1cw.gif">'+titlethread[nowget]+'<span id="xiladic'+nowget+'">...</span>'}); 
+        },
         error: function(data){
           getsource(listthread[nowget]);
         },
         success: function(data, status, xhr){
+        $('img[id="diladic'+nowget+'"]').attr('src','https://i.imgur.com/QCk4sNh.png').attr('style','margin-right: 5px;');
+        $('span[id="xiladic'+nowget+'"]').remove();
+       
        var prase=[],linkc=0;
          var dochtml = new DOMParser().parseFromString(data, "text/html");
           var passwordbox=[], countpw=0;
@@ -354,8 +362,15 @@ function newhtml(htm,pawc){
 
           
           if(nowget<nowpase){
-          
-            getsource(listthread[++nowget]);}
+            var cso =nowget+1;
+            if(listthread[cso]){
+            getsource(listthread[++nowget]);
+            } else{
+                  var hefne= document.querySelector('div.pagination ul li.active').nextSibling.nextSibling.querySelector('a').href;
+                  $('.forumbg:not(.announcement)').append('<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><h2>Hết nội dung [<a href="'+hefne+'">xem trang kế</a>]</h2></div>');
+
+            }
+          }
        
         }
       })
@@ -369,9 +384,11 @@ function newhtml(htm,pawc){
       
     }
 
-       
+            var numtitle=0;
             listthread=$('li:not(.sticky):not(.global-announce):not(.announce) dl.row-item:not(.topic_unread_hot) a.topictitle');
-        //    console.log(listthread);
+            $('li:not(.sticky):not(.global-announce):not(.announce) dl.row-item:not(.topic_unread_hot) a.topictitle').each(function() {
+            titlethread[numtitle++]=$(this).text();
+            })
             nowpase=listthread.length;
             $('.topiclist.topics li.row:not(.sticky):not(.global-announce):not(.announce) dl.row-item:not(.topic_unread_hot)').parent().remove();
             $('.topiclist.topics li.row.sticky a.topictitle,.topiclist.topics li.row.global-announce a.topictitle,.topiclist.topics li.row.announce a.topictitle,.topiclist.topics dl.row-item.topic_unread_hot a.topictitle').each(function() {
