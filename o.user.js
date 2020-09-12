@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			120
+// @version   			121
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -227,14 +227,16 @@ function newpass(paw){
             else if(techpas.length>0){techpas=techpas[0];}
             else{techpas =techpas[0]+(techpas[1] ? techpas[1]:'');}
      
-     if((typeof techpas)=='string' && !techpas.match(/(dlfree\.html|viewtopic\.|code:\ssele|\s\s\s|in\sprof|ionately\.|to\scopy|other\sis\sspecified|passed\sout|for\sall|Same\sas|hot\slove|please\?\n?|Has\sthank|Welcome|does|pass:\s|with\s|insignature|in\ssignature|([a-z0-9]+)\s([a-z0-9]+)\s([a-z0-9]+)\s)/i) && techpas.length>3){
+     if((typeof techpas)=='string' && !techpas.match(/(dlfree\.html|Been\sthanked|viewtopic\.|code:\ssele|\s\s\s|in\sprof|ionately\.|to\scopy|other\sis\sspecified|passed\sout|for\sall|Same\sas|hot\slove|please\?\n?|Has\sthank|Welcome|does|pass:\s|with\s|insignature|in\ssignature|([a-z0-9]+)\s([a-z0-9]+)\s([a-z0-9]+)\s)/i) && techpas.length>3){
         techpas=techpas.replace(/(password\:?\s?|PW\:?\s?|always\:\s?|pass\s\:\s)/i,'').replace(/(is\salways\:\s?)/i,'');
-       if(beforepw !=techpas && techpas.length>3 && techpas!="also" && techpas!="notnew"  && techpas!="Main"  && techpas!="good"){
+       if(beforepw !=techpas){
+         if(techpas.length>3 && techpas!="also" && techpas!="notnew"  && techpas!="Main"  && techpas!="good"){
             if(techpas.match(/http\:\/\//i)){techpas = techpas.split('http://')[0];}
             if(techpas.match(/passwd\:/i)){techpas = techpas.split('sswd:')[1];}
             if(techpas.match(/pass\:/i)){techpas = techpas.split('ass:')[1];}
-        beforepw=techpas;
         txt+=' <span style="padding-right: 18px; color: red;user-select: none;"><code class="btn" data-clipboard-text="'+techpas+'">'+techpas+'</code></span>';
+        beforepw=techpas;
+         }
      } 
        
      }
@@ -246,7 +248,7 @@ function newpass(paw){
   } else { return '';}
 }
 function newhtml(htm,pawc,justadd){
-      beforepw='';
+      
 
         var title=titlethread[nowget];
         var imgd='';
@@ -258,7 +260,7 @@ function newhtml(htm,pawc,justadd){
         var trhtmm='<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><a style="width: fit-content;" onclick="window.open(\''+listthread[nowget]+'\', \'_blank\', \'toolbar=yes, location=yes, status=yes, menubar=yes, scrollbars=yes\');" href="JavaScript:void(0)" target="_blank">'+title+'</a></span>';
   } else{var trhtmm='';var passw='';}
   */
-  
+    beforepw='';
     var passw = newpass(pawc);
     if (title.match(/re\:\s/i) || fepage>1){var tipdostart=parseInt(fepage);var countdpaeg = fepage;var addtitle="Trang "+(++countdpaeg); var linkaddstart='&start='+(tipdostart*8);} else{var addtitle='';var linkaddstart='';}
     var trhtmm='<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><a style="width: fit-content;" onclick="window.open(\''+(listthread[nowget])+linkaddstart+'\', \'_blank\', \'toolbar=yes, location=yes, status=yes, menubar=yes, scrollbars=yes\');" href="JavaScript:void(0)" target="_blank">'+title+' '+addtitle+'</a></span>';
@@ -271,7 +273,7 @@ function newhtml(htm,pawc,justadd){
         if(curi && curi.match(/(image|jpg|jpeg|png)/i)){
           htmm+='<img onerror="this.parentNode.removeChild(this);" style="margin: 10px auto 15px;display:inline-grid;" border="0" src="'+(curi)+'" width="33%"/>';
         }
-        else if(curi && !curi.match(/(dlfree\.|viewtopic|posting|\?file\=\/l\?file\=\/)/i) && curi!='dl.free.fr' && curi!='http://matrixtxri745dfw.onion/neo/uploa' && curi!='http://boystownbezgvykp.onion/upload.html' && curi!='http://dropperibhaerr2m.onion/file/e2o/'  && curi!='http://cryptoupei2am6si.onion/index.php' && curi!='http://twlba5j7oo5g4kj5.onion/' && curi!='http://uoxqi4lrfqztugili7zzgygibs4xstehf5hohtkpyqcoyryweypzkwid.onion/' ){
+        else if(curi && !curi.match(/(dlfree\.|dropperibhaerr2m\.onion\/file\/([a-z0-9]{3})\/$|viewtopic|posting|\?file\=\/l\?file\=\/)/i) && curi!='dl.free.fr' && curi!='http://matrixtxri745dfw.onion/neo/uploa' && curi!='http://boystownbezgvykp.onion/upload.html'  && curi!='http://cryptoupei2am6si.onion/index.php' && curi!='http://twlba5j7oo5g4kj5.onion/' && curi!='http://uoxqi4lrfqztugili7zzgygibs4xstehf5hohtkpyqcoyryweypzkwid.onion/' ){
                                 if(!curi.match(/http(s)?/i)) {curi='http://'+curi;}
                                 if (curi.match(/free\.fr/)){ var classr='hkautoload';} else{var classr='noautoload';}
           htmm+='<a class="'+classr+'" style="display: block; font-size: 250%; color: #03A9F4;width: fit-content;" href="'+(curi)+'" target="_blank">'+(curi)+'</a>';
@@ -357,12 +359,12 @@ function newhtml(htm,pawc,justadd){
           } else{            var vpost = new DOMParser().parseFromString(post.innerHTML, "text/html");}
             
             $(vpost).find('blockquote').remove();
+            $(vpost).find('.smilies').remove();
             
-            var imageurl = $(vpost).contents().find('img[src*="imageupload"]').attr('src');
-           var uri= $(vpost).contents().html().match(/((http\:\/\/)?(https\:\/\/)?(www\.)?([a-z0-9\-\_]+)(\.com|\.to|\.net|\.nl|\.io|\.org|\.li|\.fr|\.is|\.cc\|\.st|\.ro|\.onion)((?!\/viewtopic\.|dlfree\.|\/show\?i\=)([a-z0-9\.\_\-\/\!\@\#\$\%\^\&\*\(\)\=\+\*\;\:\?]+)))/ig);
+            var imageurl = $(vpost).find('img[src*="imageupload"]').attr('src');
+           var uri= $(vpost).contents().html().match(/((http\:\/\/)?(https\:\/\/)?(www\.)?([a-z0-9A-Z\-\_\.]+)(\.com|\.net|\.org|\.run|\.ru|\.to|\.nl|\.io|\.li|\.fr|\.is|\.cc\|\.st|\.ro|\.onion)((?!\/viewtopic\.|dlfree\.|\/show\?i\=)([a-z0-9\.\_\-\/\!\@\#\$\%\^\&\*\(\)\=\+\*\;\:\?]+)))/ig);
               if($(vpost).contents().html().match(/(getfile\.pl)/i)){uri=uri.map(function (namp) {if(namp.match(/(getfile\.pl)/i) && namp.length>7){return 'http://dl.free.fr/getfile.pl?file=/' + namp.substr(namp.length - 8);} else{ return namp;}});}
      
-            if(imageurl && uri){uri= uri.concat(imageurl).unique().filter(Boolean);}
          
             if(totalurl && uri){
                totalurl=  uri.concat(totalurl).unique().filter(Boolean);
@@ -374,6 +376,7 @@ function newhtml(htm,pawc,justadd){
               totalurl=[];
             }
          //     
+            if(imageurl){totalurl= totalurl.concat(imageurl).unique().filter(Boolean);}
           
           prase[linkc++]=totalurl.unique();
           })
