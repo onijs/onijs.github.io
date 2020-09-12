@@ -232,6 +232,7 @@ function newpass(paw){
        if(beforepw !=techpas && techpas.length>3 && techpas!="also" && techpas!="notnew"  && techpas!="Main"  && techpas!="good"){
             if(techpas.match(/http\:\/\//i)){techpas = techpas.split('http://')[0];}
             if(techpas.match(/passwd\:/i)){techpas = techpas.split('sswd:')[1];}
+            if(techpas.match(/pass\:/i)){techpas = techpas.split('ass:')[1];}
         beforepw=techpas;
         txt+=' <span style="padding-right: 18px; color: red;user-select: none;"><code class="btn" data-clipboard-text="'+techpas+'">'+techpas+'</code></span>';
      } 
