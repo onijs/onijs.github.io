@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			117
+// @version   			118
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -47,7 +47,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Lấy nội dung từ nhiều trang comment</li><li style="text-transform: none !important;margin-bottom: 10px;"> Xoá các blockquote trong DOM trước khi xử lý chuỗi</li><li style="text-transform: none !important;margin-bottom: 10px;"> Bổ sung thuật toán nhận diện mật khẩu</li><li style="text-transform: none !important;margin-bottom: 10px;"> Link bài viết có nhiều comment hoặc các link bài được đính sẽ không hoạt động ở chế độ autofetch</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Lấy nội dung từ trang tìm kiếm, từ nhiều trang comment</li><li style="text-transform: none !important;margin-bottom: 10px;"> Bổ sung thuật toán nhận diện mật khẩu</li><li style="text-transform: none !important;margin-bottom: 10px;"> Link bài viết có nhiều comment hoặc các link bài được đính sẽ không hoạt động ở chế độ autofetch</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
@@ -175,7 +175,7 @@ var newherf = $(this).attr('href').replace('https://www.datafilehost.com/d/','ht
 
 })
 
-    if(location.href.match(/\.onion\/viewforum\.php/i)){
+    if(location.href.match(/\.onion\/viewforum\.php/i) || location.href.match(/\.onion\/search\.php/i)){
     GM_addStyle('.notyf__toast{width:500px;}.notyf__ripple{max-width:500px;}');
     var listthread = [];
     var titlethread =[], ttcount=0;
@@ -183,7 +183,7 @@ var newherf = $(this).attr('href').replace('https://www.datafilehost.com/d/','ht
     var nowpase=0;
     var dp=true;
     var beforepw='';
-    var fepage=0;
+    var fepage=1;
 function onlyUnique(value, index, self) { 
     return self.indexOf(value) === index;
 }
@@ -294,7 +294,7 @@ function newhtml(htm,pawc,justadd){
         
       $.ajax({type: "GET",url: vurl,
         beforeSend: function(data){
-        if(nextpfi=='yub') {var ifde= ++fepage; ifde='trang:'+ifde} else{var ifde='';fepage=0;}
+        if(nextpfi=='yub') {var ifde= ++fepage; ifde='trang:'+ifde} else{var ifde='';fepage=1;}
         hnotyf.open({duration: 13000,type: 'info',message: '<img id="diladic'+(nowget)+'" src="https://i.imgur.com/H4Ua1cw.gif">'+titlethread[nowget]+'<span id="xiladic'+(nowget)+'">...'+ifde+'</span>'}); 
         },
         error: function(data){
@@ -306,7 +306,8 @@ function newhtml(htm,pawc,justadd){
        
        var prase=[],linkc=0;
          var dochtml = new DOMParser().parseFromString(data, "text/html");
-         try{var nextpages= dochtml.querySelector('div.pagination ul li.active').nextSibling.nextSibling.querySelector('a').href;} catch (e){ var nextpages='';}
+       
+         try{var nextpages= dochtml.querySelector('div.pagination ul li.arrow.next a').href;} catch (e){ var nextpages='';}
 
           var passwordbox=[], countpw=0;
           $(dochtml).find('a').text($(dochtml).find('a').attr('href'));
@@ -356,7 +357,7 @@ function newhtml(htm,pawc,justadd){
             $(vpost).find('blockquote').remove();
             
             var imageurl = $(vpost).contents().find('img[src*="imageupload"]').attr('src');
-           var uri= $(vpost).contents().html().match(/((http\:\/\/|https\:\/\/|www\.)?([a-z0-9\-\_\.]+)(\.com|\.to|\.net|\.nl|\.io|\.org|\.li|\.fr|\.ro|\.onion)((?!\/viewtopic\.|\.\.\.|dlfree\.|\/show\?i\=)([a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};:\\|,.\/?]+)))/ig);
+           var uri= $(vpost).contents().html().match(/((http\:\/\/|https\:\/\/|www\.)?([a-z0-9\-\_\.]+)(\.com|\.to|\.net|\.nl|\.io|\.org|\.li|\.fr|\.ro|\.onion)((?!\/viewtopic\.|\.\.\.|dlfree\.|\/show\?i\=)\/([a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};:\\|,.\/?]+)))/ig);
               if($(vpost).contents().html().match(/(getfile\.pl)/i)){uri=uri.map(function (namp) {if(namp.match(/(getfile\.pl)/i) && namp.length>7){return 'http://dl.free.fr/getfile.pl?file=/' + namp.substr(namp.length - 8);} else{ return namp;}});}
      
             if(imageurl && uri){uri= uri.concat(imageurl).unique().filter(Boolean);}
@@ -406,9 +407,12 @@ function newhtml(htm,pawc,justadd){
     }
 
             var numtitle=0;
-            listthread=$('li:not(.sticky):not(.global-announce):not(.announce) dl.row-item:not(.topic_unread_hot) a.topictitle');
+    //        listthread=$('li:not(.sticky):not(.global-announce):not(.announce) dl.row-item:not(.topic_unread_hot) a.topictitle');
             $('li:not(.sticky):not(.global-announce):not(.announce) dl.row-item:not(.topic_unread_hot) a.topictitle').each(function() {
+            if($(this).attr('href').match(/f\=(9|66|67|119|69|68|70|99|13|100|95|180|85|10|80|134|12|18|103|104|105|17|130|159|14|83|177|15|82|16|110|132)\&/i)){
+            listthread[nowpase++]=$(this).attr('href');
             titlethread[numtitle++]=$(this).text();
+            }
             })
             nowpase=listthread.length;
             $('.topiclist.topics li.row:not(.sticky):not(.global-announce):not(.announce) dl.row-item:not(.topic_unread_hot)').parent().remove();
@@ -419,7 +423,11 @@ function newhtml(htm,pawc,justadd){
             })
       
             GM_addStyle('.forumbg:not(.announcement){background-color: #e8ecee !important;background-image:unset !important;}');
+            if(listthread.length>0){
                 getsource(listthread[0])
+            } else{
+               hnotyf.open({duration: 13000,type: 'info',message: 'Không có nội dung nào để truy cập'}); 
+            }
 
           
         }
