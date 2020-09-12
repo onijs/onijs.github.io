@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			118
+// @version   			119
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -231,6 +231,7 @@ function newpass(paw){
         techpas=techpas.replace(/(password\:?\s?|PW\:?\s?|always\:\s?|pass\s\:\s)/i,'').replace(/(is\salways\:\s?)/i,'');
        if(beforepw !=techpas && techpas.length>3 && techpas!="also" && techpas!="notnew"  && techpas!="Main"  && techpas!="good"){
             if(techpas.match(/http\:\/\//i)){techpas = techpas.split('http://')[0];}
+            if(techpas.match(/passwd\:/i)){techpas = techpas.split('sswd:')[1];}
         beforepw=techpas;
         txt+=' <span style="padding-right: 18px; color: red;user-select: none;"><code class="btn" data-clipboard-text="'+techpas+'">'+techpas+'</code></span>';
      } 
@@ -312,8 +313,8 @@ function newhtml(htm,pawc,justadd){
           var passwordbox=[], countpw=0;
           $(dochtml).find('a').text($(dochtml).find('a').attr('href'));
           $(dochtml).find('br').remove();
-          const regix= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|is\salways|Pass\s?)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\`].{6,})/i);
-          const regii= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|is\salways|Pass\s?)(\:+)?(\s+)?(\n+)?(.*.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()\_\+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\%\$\)\(\`].{6,})/ig);
+          const regix= new RegExp(/(Passwd|password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|is\salways|Pass\s?)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\`].{6,})/i);
+          const regii= new RegExp(/(Passwd|password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|is\salways|Pass\s?)(\:+)?(\s+)?(\n+)?(.*.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()\_\+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\%\$\)\(\`].{6,})/ig);
           try{titlethread[ttcount++]=dochtml.querySelector('h3.first').innerText;} catch(e){ console.log('err title');}
          
           
@@ -349,7 +350,7 @@ function newhtml(htm,pawc,justadd){
             var vpost = new DOMParser().parseFromString(vvst, "text/html");
 
             var inb= $(vpost).contents().text().match(/(\b|\s)((?!Password|dlfree|Backup|Torturer|Download|Link)([a-z0-9A-Z]{8}))(\r|\n|\s|\r\n|\n\r)/ig);
-                   if(inb){ totalurl=inb.map(function (i) {var ic=i.substring(0, 8); if(ic.length==8){ return 'http://dl.free.fr/getfile.pl?file=/' + ic;}});}
+                   if(inb){ totalurl=inb.map(function (i) {var ic=i.substring(0, 8); if(ic.length==8 && !ic.match(/\s/i)){ return 'http://dl.free.fr/getfile.pl?file=/' + ic;}});}
                     
 
           } else{            var vpost = new DOMParser().parseFromString(post.innerHTML, "text/html");}
@@ -357,7 +358,7 @@ function newhtml(htm,pawc,justadd){
             $(vpost).find('blockquote').remove();
             
             var imageurl = $(vpost).contents().find('img[src*="imageupload"]').attr('src');
-           var uri= $(vpost).contents().html().match(/((http\:\/\/|https\:\/\/|www\.)?([a-z0-9\-\_\.]+)(\.com|\.to|\.net|\.nl|\.io|\.org|\.li|\.fr|\.ro|\.onion)((?!\/viewtopic\.|\.\.\.|dlfree\.|\/show\?i\=)\/([a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};:\\|,.\/?]+)))/ig);
+           var uri= $(vpost).contents().html().match(/((http\:\/\/|https\:\/\/|www\.)?([a-z0-9\-\_\.]+)(\.com|\.to|\.net|\.nl|\.io|\.org|\.li|\.fr|\.cc\|\.st|\.ro|\.onion)((?!\/viewtopic\.|\.\.\.|dlfree\.|\/show\?i\=)\/([a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};:\\|,.\/?]+)))/ig);
               if($(vpost).contents().html().match(/(getfile\.pl)/i)){uri=uri.map(function (namp) {if(namp.match(/(getfile\.pl)/i) && namp.length>7){return 'http://dl.free.fr/getfile.pl?file=/' + namp.substr(namp.length - 8);} else{ return namp;}});}
      
             if(imageurl && uri){uri= uri.concat(imageurl).unique().filter(Boolean);}
