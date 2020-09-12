@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			111
+// @version   			112
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -47,7 +47,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Cải thiện hiệu xuất, bổ sung một số thuật toán</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Link bài viết có nhiều comment hoặc các link bài được đính sẽ không hoạt động ở chế độ autofetch</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
@@ -265,7 +265,9 @@ function newhtml(htm,pawc){
         }
       }  
          $('.forumbg:not(.announcement)').append(trhtmm+htmm+passw);
-
+  if(nowget==0){
+        setTimeout(function(){window.scrollTo({ top: document.querySelector('.newcss').offsetTop-145, behavior: 'smooth'});}, 500);
+  }
    
 }
     function getsource(vurl){
@@ -282,7 +284,7 @@ function newhtml(htm,pawc){
           $(dochtml).find('br').remove();
           const regix= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|is\salways)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\`].{6,})/i);
           const regii= new RegExp(/(password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|is\salways)(\:+)?(\s+)?(\n+)?(.*.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()\_\+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\%\$\)\(\`].{6,})/ig);
-          titlethread[ttcount++]=dochtml.querySelector('h3.first').innerText;
+          try{titlethread[ttcount++]=dochtml.querySelector('h3.first').innerText;} catch(e){ console.log('err title');}
          
           
           var password_profile2 =dochtml.querySelectorAll('.signature').forEach(function(cpost) {
@@ -360,10 +362,16 @@ function newhtml(htm,pawc){
     }
 
        
-            listthread=$('li:not(.sticky):not(.global-announce) a.topictitle');
+            listthread=$('li:not(.sticky):not(.global-announce):not(.announce) dl.row-item:not(.topic_unread_hot) a.topictitle');
         //    console.log(listthread);
             nowpase=listthread.length;
-            $('.topiclist.topics li.row:not(.sticky):not(.global-announce)').remove();
+            $('.topiclist.topics li.row:not(.sticky):not(.global-announce):not(.announce) dl.row-item:not(.topic_unread_hot)').parent().remove();
+            $('.topiclist.topics li.row.sticky a.topictitle,.topiclist.topics li.row.global-announce a.topictitle,.topiclist.topics li.row.announce a.topictitle,.topiclist.topics dl.row-item.topic_unread_hot a.topictitle').each(function() {
+               $(this).addClass("noautoload");
+               $(this).attr("onclick",'window.open(\''+$(this).attr("href")+'\', \'_blank\', \'toolbar=yes, location=yes, status=yes, menubar=yes, scrollbars=yes\');');
+               $(this).attr("href",'JavaScript:void(0)');
+            })
+      
             GM_addStyle('.forumbg:not(.announcement){background-color: #e8ecee !important;background-image:unset !important;}');
                 getsource(listthread[0])
 
