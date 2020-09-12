@@ -285,7 +285,7 @@ function newhtml(htm,pawc){
       $.ajax({type: "GET",url: vurl,
         beforeSend: function(data){
       //  hnotyf.dismissAll(0);
-        hnotyf.open({duration: 8000,type: 'info',message: '<img id="diladic'+nowget+'" src="https://i.imgur.com/H4Ua1cw.gif">'+titlethread[nowget]+'<span id="xiladic'+nowget+'">...</span>'}); 
+        hnotyf.open({duration: 13000,type: 'info',message: '<img id="diladic'+nowget+'" src="https://i.imgur.com/H4Ua1cw.gif">'+titlethread[nowget]+'<span id="xiladic'+nowget+'">...</span>'}); 
         },
         error: function(data){
           getsource(listthread[nowget]);
