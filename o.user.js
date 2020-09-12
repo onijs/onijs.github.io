@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			115
+// @version   			116
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -47,7 +47,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Bổ sung thuật toán nhận diện mật khẩu</li><li style="text-transform: none !important;margin-bottom: 10px;"> Link bài viết có nhiều comment hoặc các link bài được đính sẽ không hoạt động ở chế độ autofetch</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Xoá các blockquote trong DOM trước khi xử lý chuỗi</li><li style="text-transform: none !important;margin-bottom: 10px;"> Bổ sung thuật toán nhận diện mật khẩu</li><li style="text-transform: none !important;margin-bottom: 10px;"> Link bài viết có nhiều comment hoặc các link bài được đính sẽ không hoạt động ở chế độ autofetch</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
@@ -230,6 +230,7 @@ function newpass(paw){
      if((typeof techpas)=='string' && !techpas.match(/(dlfree\.html|viewtopic\.|code:\ssele|\s\s\s|in\sprof|ionately\.|to\scopy|other\sis\sspecified|passed\sout|for\sall|Same\sas|hot\slove|please\?\n?|Has\sthank|Welcome|does|pass:\s|with\s|insignature|in\ssignature|([a-z0-9]+)\s([a-z0-9]+)\s([a-z0-9]+)\s)/i) && techpas.length>3){
         techpas=techpas.replace(/(password\:?\s?|PW\:?\s?|always\:\s?|pass\s\:\s)/i,'').replace(/(is\salways\:\s?)/i,'');
        if(beforepw !=techpas && techpas.length>3 && techpas!="also" && techpas!="notnew"  && techpas!="Main"  && techpas!="good"){
+            if(techpas.match(/http\:\/\//i)){techpas = techpas.split('http://')[0];}
         beforepw=techpas;
         txt+=' <span style="padding-right: 18px; color: red;user-select: none;"><code class="btn" data-clipboard-text="'+techpas+'">'+techpas+'</code></span>';
      }
@@ -340,9 +341,14 @@ function newhtml(htm,pawc){
 
           } else{            var vpost = new DOMParser().parseFromString(post.innerHTML, "text/html");}
             
+            $(vpost).find('blockquote').remove();
+            
+            var imageurl = $(vpost).contents().find('img[src*="imageupload"]').attr('src');
            var uri= $(vpost).contents().html().match(/((http\:\/\/|https\:\/\/|www\.)?([a-z0-9\-\_\.]+)(\.com|\.to|\.net|\.nl|\.io|\.org|\.li|\.fr|\.ro|\.onion)((?!\/viewtopic\.|\.\.\.|dlfree\.|\/show\?i\=)([a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};:\\|,.\/?]+)))/ig);
               if($(vpost).contents().html().match(/(getfile\.pl)/i)){uri=uri.map(function (namp) {if(namp.match(/(getfile\.pl)/i) && namp.length>7){return 'http://dl.free.fr/getfile.pl?file=/' + namp.substr(namp.length - 8);} else{ return namp;}});}
-            
+     
+            if(imageurl && uri){uri= uri.concat(imageurl).unique().filter(Boolean);}
+         
             if(totalurl && uri){
                totalurl=  uri.concat(totalurl).unique().filter(Boolean);
             } else  if (totalurl){totalurl = totalurl.unique().filter(Boolean);}
@@ -350,13 +356,13 @@ function newhtml(htm,pawc){
               totalurl = uri.unique().filter(Boolean);
             }
             else{
-              totalurl='';
+              totalurl=[];
             }
          //     
           
-          prase[linkc++]=totalurl;
+          prase[linkc++]=totalurl.unique();
           })
-          try{var resulturl= prase.filter(Boolean).unique();} catch(e){ console.log('oosp');}
+          try{var resulturl= prase.unique().filter(Boolean);} catch(e){ console.log('oosp');}
           var resultpw=passwordbox.unique().filter(Boolean);
         newhtml(resulturl.filter(Boolean).unique(),resultpw);
 
