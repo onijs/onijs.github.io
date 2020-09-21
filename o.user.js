@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			128
+// @version   			129
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -263,7 +263,7 @@ function newpass(paw){
             else if(techpas.length>0){techpas=techpas[0];}
             else{techpas =techpas[0]+(techpas[1] ? techpas[1]:'');}
      
-     if((typeof techpas)=='string' && !techpas.match(/(dlfree\.html|Been\sthanked|viewtopic\.|code:\ssele|\s\s\s|in\sprof|ionately\.|to\scopy|other\sis\sspecified|passed\sout|for\sall|Same\sas|hot\slove|please\?\n?|Has\sthank|Welcome|does|pass:\s|with\s|insignature|in\ssignature|([a-z0-9]+)\s([a-z0-9]+)\s([a-z0-9]+)\s)/i) && techpas.length>3){
+     if((typeof techpas)=='string' && !techpas.match(/(dlfree\.html|Been\sthanked|viewtopic\.|\swrong|code:\ssele|\s\s\s|p\/w\:|Code\:|in\sprof|ionately\.|to\scopy|other\sis\sspecified|passed\sout|for\sall|Same\sas|hot\slove|please\?\n?|Has\sthank|Welcome|does|pass:\s|with\s|insignature|in\ssignature|([a-z0-9]+)\s([a-z0-9]+)\s([a-z0-9]+)\s)/i) && techpas.length>3){
         techpas=techpas.replace(/(password\:?\s?|PW\:?\s?|always\:\s?|pass\s\:\s)/i,'').replace(/(is\salways\:\s?)/i,'');
        if(beforepw !=techpas){
          if(techpas.length>3 && techpas!="also" && techpas!="notnew"  && techpas!="Main"  && techpas!="good"){
@@ -352,8 +352,8 @@ function newhtml(htm,pawc,justadd){
           var passwordbox=[], countpw=0;
           $(dochtml).find('a').text($(dochtml).find('a').attr('href'));
           $(dochtml).find('br').remove();
-          const regix= new RegExp(/(Passwd|password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|is\salways|Pass\s?)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\`].{6,})/i);
-          const regii= new RegExp(/(Passwd|password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|is\salways|Pass\s?)(\:+)?(\s+)?(\n+)?(.*.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()\_\+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\%\$\)\(\`].{6,})/ig);
+          const regix= new RegExp(/(Passwd|password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|is\salways|p\/w|Pass\s?)(\:+)?(\s+)?(\n+)?(.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\`].{6,})/i);
+          const regii= new RegExp(/(Passwd|password\sis|the\spassword|PW\sfor\sfiles|with\spassword|my\sfiles\sis|password|PW|is\salways|p\/w|Pass\s?)(\:+)?(\s+)?(\n+)?(.*.*[a-z0-9\*\!\@\#\$\%\^\&a-z0-9\!@#$%^&*()\_\+\-=\[\]{};':"\\|,.<>\/?\$\.\%\,\[\]\%\$\)\(\`].{6,})/ig);
           try{titlethread[ttcount++]=dochtml.querySelector('h3.first').innerText;} catch(e){ console.log('err title');}
          
           
