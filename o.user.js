@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			125
+// @version   			126
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -47,7 +47,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;"> Tự động nhận dạng 8 ký tự free.fr</li><li style="text-transform: none !important;margin-bottom: 10px;"> Bổ sung độ chính xác cho free.fr</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Cập nhật từ điển bổ sung : location;pleasure;reported...</li><li style="text-transform: none !important;margin-bottom: 10px;"> Tự động nhận dạng 8 ký tự free.fr</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
@@ -184,7 +184,7 @@ var totalurl=[],vocs=0;
 
             var inb= $(vpost).contents().text().match(/(\b|\s)((?!Password|dlfree|Backup|Torturer|Download|Link)([a-z0-9A-Z]{8}))(\r|\n|\s|\r\n|\n\r)/ig);
          //   console.log(inb);
-                   if(inb){ totalurl=inb.map(function (i) {var i=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=i.substring(0, 8);if(ic.length==8 && !ic.match(/(separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){return 'http://dl.free.fr/getfile.pl?file=/' + ic;}}).filter(Boolean);}
+                   if(inb){ totalurl=inb.map(function (i) {var i=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=i.substring(0, 8);if(ic.length==8 && !ic.match(/(location|reported|pleasure|jgbp([0-9]{4})|probably|separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){return 'http://dl.free.fr/getfile.pl?file=/' + ic;}}).filter(Boolean);}
 			       if(totalurl){        
 
   var vav=document.createElement('div');
@@ -389,7 +389,7 @@ function newhtml(htm,pawc,justadd){
             var vpost = new DOMParser().parseFromString(vvst, "text/html");
 
             var inb= $(vpost).contents().text().match(/(\b|\s)((?!Password|dlfree|Backup|Torturer|Download|Link)([a-z0-9A-Z]{8}))(\r|\n|\s|\r\n|\n\r)/ig);
-                   if(inb){ totalurl=inb.map(function (i) {var i=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=i.substring(0, 8);if(ic.length==8 && !ic.match(/(separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){return 'http://dl.free.fr/getfile.pl?file=/' + ic;}}).filter(Boolean);}
+                   if(inb){ totalurl=inb.map(function (i) {var i=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=i.substring(0, 8);if(ic.length==8 && !ic.match(/(location|reported|pleasure|jgbp([0-9]{4})|probably|separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){return 'http://dl.free.fr/getfile.pl?file=/' + ic;}}).filter(Boolean);}
                     
 
           } else{            var vpost = new DOMParser().parseFromString(post.innerHTML, "text/html");}
