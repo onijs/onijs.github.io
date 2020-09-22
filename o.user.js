@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			129
+// @version   			130
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -24,6 +24,8 @@
 // @author       HOAKHUYA.onion
 // @include     *://*.onion/*
 // @include		  *://receive-sms.*/*
+// @include		  *://567pan.com*/*
+// @include		  *://*.567pan.com*/*
 // @include		  *://receive-sms-free.*/*
 // @include		  *://*.histats.com/*
 // @include		  *://*.bestchange.com/*
@@ -47,7 +49,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Cập nhật từ điển bổ sung : anything;although;searched...</li><li style="text-transform: none !important;margin-bottom: 10px;">Loại trừ blockquote trong bình luận khi xử lý download</li><li style="text-transform: none !important;margin-bottom: 10px;"> Tự động nhận dạng 8 ký tự free.fr</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Bổ sung 567pan.com</li><li style="text-transform: none !important;margin-bottom: 10px;">Loại trừ blockquote trong bình luận khi xử lý download</li><li style="text-transform: none !important;margin-bottom: 10px;"> Tự động nhận dạng 8 ký tự free.fr</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
@@ -75,6 +77,53 @@ const hkparseUrl = (string, prop) =>  {const a =new URL(string);const {host, hos
 function insertAfter(referenceNode, newNode) {referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);}
 //________________________________________________________________________
 var onionJS = {
+    pan567_com: function(){
+            if (location.href.isdomain('567pan.com')){
+                          if(!location.href.match(/https\:/)){window.location.href=location.href.replace('http','https');}
+                          if (location.href.match(/567pan.com\/space\.php/)){
+                             if(document.querySelector('#table_files')){document.querySelector('#table_files').querySelectorAll('a').forEach(function(xj) {
+                                if(xj.href.match(/file\-/)){
+                                  var norid = xj.href.replace(/file/ig,'down');
+                                  xj.href=norid;
+                                  xj.setAttribute("target", "_blank");
+                                }
+                               
+                             })
+                          
+                          }
+                          }    
+           var vdo =false;
+          document.addEventListener("DOMNodeInserted", function () {
+            if(vdo==false){
+              vdo=true;
+              $("#btn-down-svr").val('Tải xuống ưu tiên');
+              
+              $('.toolbar span[name="btnSetFolder"] div').html('Vị trí lưu tập tin');
+              $('.toolbar span[name="btnStart"]').html('Bắt đầu tải');
+              $('.toolbar span[name="btnStop"]').html('Dừng tất cả');
+              $('.toolbar span[name="btnSetup"]').html('Cài đặt tiện ích');
+              $('.footer span[name="btnClear"]').html('Dọn dẹp tập tin đã tải xong');
+              $('.file-post-view span[name="stop"] div').html('Dừng');
+              $('.file-post-view span[name="down"] div').html('Tiếp tục');
+              $(".btn.btn-app.btn-info.btn-mini").html('<i class="icon-save bigger-160"></i>Tạo bản sao');
+              $(".files-panel>.header").html('Trình quản lý tập tin')
+              var nowtenx = $(".file-post-view .msg.top-space").text();
+                  if(nowtenx.match(/正在下载队列中等待/ig)){$(".file-post-view .msg.top-space").html('Đang đợi đến lượt..');}
+                  if(nowtenx.match(/开始连接服务器/ig)){$(".file-post-view .msg.top-space").html('Đang kết nối đến máy chủ..');}
+                  if(nowtenx.match(/下载已停止/ig)){$(".file-post-view .msg.top-space").html('Đã huỷ tải xuống');}
+            }  
+            setTimeout(function(){vdo = false;}, 75);
+          
+          })
+              
+              GM_addStyle('.btn.btn-app.btn-mini{width:127px;} .downpage_l,.files-panel{width: unset !important; height: unset !important;} .btn.btn-app.btn-mini.btn-warning,.container-fluid.footer,.backstretch{display:none;} .file-post-view{height:300px;} span,.msg,.btn.btn-app.btn-mini,.header{font-family: Arial, Helvetica, sans-serif;}');
+              if(document.querySelector('div[style*="border:1px solid #ccc; padding:10px;"]')){document.querySelector('div[style*="border:1px solid #ccc; padding:10px;"]').remove();}
+              if($("#down_box>h4")){$("#down_box>h4").remove();}
+              if(document.querySelector('div[style*="border:1px solid #ccc; padding:10px;"]')){document.querySelector('div[style*="border:1px solid #ccc; padding:10px;"]').remove();}
+              $(".table-bordered.table-striped,a.btn.btn-danger.btn-block").parent().remove()
+              $("h4.lighter.clear").parent().remove()
+            }
+    },
 //________________________________________________________________________
     receivesms_net: function(){
     if(location.href.isdomain('receive-sms.cc') || location.href.isdomain('receive-sms-free.net')){
@@ -551,6 +600,7 @@ init: function () {
 		this.histats_com();
 		this.bestchange_com();
 		this.receivesms_net();
+		this.pan567_com();
 
     }
    
