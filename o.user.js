@@ -275,7 +275,7 @@ var totalurl=[],vocs=0;
             $(vpost).find('.smilies').remove();
           if(kbpg=='G'){var inb= $(vpost).contents().text().match(/(^|[\s\n]|<[A-Za-z]*\/?>)((?:https?|ftp):\/\/[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/ig);
                           var pattern = /(^|[\s\n]|<[A-Za-z]*\/?>)((?:https?|ftp):\/\/[\-A-Z0-9+\u0026\u2019@#\/%?=()~_|!:,.;]*[\-A-Z0-9+\u0026@#\/%=~()_|])/gi;
-                          if (inb) {totalurl = inb.map(function (i) {return i;}).filter(Boolean);}        
+                          if (inb) {totalurl = inb.map(function (i) {return i.replace(/(\r\n|\n|\r)/gm,"");}).filter(Boolean);}        
             if(totalurl.length>0){        
 
             var vav=document.createElement('div');
