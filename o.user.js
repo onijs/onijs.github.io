@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			131
+// @version   			134
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -8,9 +8,9 @@
 // @icon       https://github.com/onijs/onijs.github.io/raw/master/o.png
 // @downloadURL https://github.com/onijs/onijs.github.io/raw/master/o.user.js
 // @updateURL    https://github.com/onijs/onijs.github.io/raw/master/o.user.js
-// @resource    JQ_351     https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js
-// @resource    JQ_352    https://malsup.github.io/jquery.form.js
-// @resource    JQ_354    https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js
+// @require    https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js
+// @require    https://malsup.github.io/jquery.form.js
+// @require    https://cdn.jsdelivr.net/npm/clipboard@2.0.6/dist/clipboard.min.js
 // @require     https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js
 // @resource    jqUI_CSS    https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css
 // @compatible        chrome Chrome_70.0.2490.86 + Violentmonkey
@@ -49,13 +49,10 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Bug fixes</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Bấm chữ F khi xem bài viết để kích hoạt chức năng lấy 8 ký tự thành link free.fr</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
-eval(GM_getResourceText('JQ_351'));
-eval(GM_getResourceText('JQ_352'));
-eval(GM_getResourceText('JQ_354'));
 
 var clipboard = new ClipboardJS('.btn');
 
@@ -236,7 +233,12 @@ var totalurl=[],vocs=0;
             $(vpost).find('blockquote').remove();
             $(vpost).find('.smilies').remove();
             var inb= $(vpost).contents().text().match(/(\b|\s)((?!Password|dlfree|Backup|Torturer|Download|Link)([a-z0-9A-Z]{8}))(\r|\n|\s|\r\n|\n\r)/ig);
-                   if(inb){ totalurl=inb.map(function (i) {var i=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=i.substring(0, 8);if(ic.length==8 && !ic.match(/(bastards|anything|although|searched|archives|pinpoint|consider|slightly|prevents|preserve|previous|compared|location|reported|pleasure|jgbp([0-9]{4})|probably|separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){return 'http://dl.free.fr/getfile.pl?file=/' + ic;}}).filter(Boolean);}
+                   if(inb){ totalurl=inb.map(function (i) {var i=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=i.substring(0, 8);if(ic.length==8 && !ic.match(/(bastards|anything|although|searched|archives|pinpoint|consider|slightly|prevents|preserve|previous|compared|location|reported|pleasure|jgbp([0-9]{4})|probably|separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){
+                    if(ic.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/g) || ic.match(/(?=.*\d)(?=.*[a-z])/g) || ic.match(/(?=.*\d)(?=.*[A-Z])/g) || ic.match(/(?=.*[a-z])(?=.*[A-Z])/g) ){
+                     return 'http://dl.free.fr/getfile.pl?file=/' + ic;
+                    }
+                     
+                   }}).filter(Boolean);}
 			       if(totalurl.length>0){        
 
   var vav=document.createElement('div');
@@ -258,7 +260,59 @@ var totalurl=[],vocs=0;
 })
 
 
+  
+function runcatchlinkeverywhere(){
+document.querySelectorAll('.borrerhod,marinf').forEach(e => e.parentNode.removeChild(e));
+document.querySelectorAll('div.postbody div.content').forEach(function(post) {
+var totalurl=[],vocs=0;
 
+            var   vvst = post.innerHTML.replace(/\<br\>/ig,'\n');
+            var vpost = new DOMParser().parseFromString(vvst, "text/html");
+            $(vpost).find('blockquote').remove();
+            $(vpost).find('.smilies').remove();
+            var inb= $(vpost).contents().text().match(/(\b|\s|\r|\n|\s|\r\n|\n\r)((?!Password|dlfree|Backup|Torturer|Download|Link)([a-z0-9A-Z]{8})(\W|$|\s|\n|\r|\r\n|\n\r))/ig);
+                   if(inb){ totalurl=inb.map(function (i) {var i=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=i.substring(0, 8);if(ic.length==8 && !ic.match(/(Khortyts|Intervie|Subtitle|multipar|Hardcode|bastards|anything|although|searched|archives|pinpoint|consider|slightly|prevents|preserve|previous|compared|location|reported|pleasure|jgbp([0-9]{4})|probably|separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){
+                      if(ic.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/g) || ic.match(/(?=.*\d)(?=.*[a-z])/g) || ic.match(/(?=.*\d)(?=.*[A-Z])/g) || ic.match(/(?=.*[a-z])(?=.*[A-Z])/g) ){return  'http://dl.free.fr/getfile.pl?file=/' + ic;}
+                     
+                   }}).filter(Boolean);}
+			       if(totalurl.length>0){        
+
+  var vav=document.createElement('div');
+	vav.classList.add('borrerhod','marinf');
+  
+	var inerHTML='<span style="margin-right: 8px;">Download:';
+   for (var i=0; i < totalurl.length; i++) {
+   
+  	var vavvvs=totalurl[i]+'';
+		inerHTML+=' <a href="'+vavvvs+'" class="hkautoload"  style="margin-right: 8px;" >'+(vavvvs.substr(vavvvs.length - 8))+'</a>';
+		
+};
+		vav.innerHTML=inerHTML+'</span>';
+		post.appendChild(vav);
+
+}
+          
+          
+})
+}
+
+var addEvent = document.addEventListener ? function(target,type,action){
+    if(target){
+        target.addEventListener(type,action,false);
+    }
+} : function(target,type,action){
+    if(target){
+        target.attachEvent('on' + type,action,false);
+    }
+}
+
+addEvent(document,'keydown',function(e){
+    e = e || window.event;
+    var key = e.which || e.keyCode;
+    if(key===70||key===188){
+        runcatchlinkeverywhere();
+    }
+});
 
   
 }
@@ -441,7 +495,12 @@ function newhtml(htm,pawc,justadd){
             var vpost = new DOMParser().parseFromString(vvst, "text/html");
 
             var inb= $(vpost).contents().text().match(/(\b|\s)((?!Password|dlfree|Backup|Torturer|Download|Link)([a-z0-9A-Z]{8}))(\r|\n|\s|\r\n|\n\r)/ig);
-                   if(inb){ totalurl=inb.map(function (i) {var ik=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=ik.substring(0, 8);if(ic.length==8 && !ic.match(/(bastards|anything|although|searched|archives|pinpoint|consider|slightly|prevents|preserve|previous|compared|location|reported|pleasure|jgbp([0-9]{4})|probably|separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){return 'http://dl.free.fr/getfile.pl?file=/' + ic;}}).filter(Boolean);}
+                   if(inb){ totalurl=inb.map(function (i) {var ik=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=ik.substring(0, 8);if(ic.length==8 && !ic.match(/(bastards|anything|although|searched|archives|pinpoint|consider|slightly|prevents|preserve|previous|compared|location|reported|pleasure|jgbp([0-9]{4})|probably|separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){
+                    if(ic.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/g) || ic.match(/(?=.*\d)(?=.*[a-z])/g) || ic.match(/(?=.*\d)(?=.*[A-Z])/g) || ic.match(/(?=.*[a-z])(?=.*[A-Z])/g) ){
+                     return 'http://dl.free.fr/getfile.pl?file=/' + ic;
+                    }
+                   
+                   }}).filter(Boolean);}
                     
 
           } else{            var vpost = new DOMParser().parseFromString(post.innerHTML, "text/html");}
