@@ -285,7 +285,7 @@ var totalurl=[],vocs=0;
              for (var i=0; i < totalurl.length; i++) {
 
               var vavvvs=totalurl[i]+'';
-                  inerHTML+=' <a href="'+vavvvs+'" class="hkautoload"  style="margin-right: 8px;" >'+vavvvs+'</a><br>';
+                  inerHTML+=' <a href="'+vavvvs+'" class="hkautoload" rel= "noopener noreferrer nofollow" style="margin-right: 8px;" >'+vavvvs+'</a><br>';
 
           };
                   vav.innerHTML=inerHTML+'</span>';
@@ -308,7 +308,7 @@ var totalurl=[],vocs=0;
    for (var i=0; i < totalurl.length; i++) {
    
   	var vavvvs=totalurl[i]+'';
-		inerHTML+=' <a href="'+vavvvs+'" class="hkautoload"  style="margin-right: 8px;" >'+(vavvvs.substr(vavvvs.length - 8))+'</a>';
+		inerHTML+=' <a href="'+vavvvs+'" rel= "noopener noreferrer nofollow" class="hkautoload"  style="margin-right: 8px;" >'+(vavvvs.substr(vavvvs.length - 8))+'</a>';
 		
 };
 		vav.innerHTML=inerHTML+'</span>';
