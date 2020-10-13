@@ -49,7 +49,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Bấm chữ F khi xem bài viết để kích hoạt chức năng lấy 8 ký tự thành link free.fr</li><li style="text-transform: none !important;margin-bottom: 10px;">Bấm chữ G khi xem bài viết để tự bắt link tải xuống</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Bấm chữ F khi xem bài viết để kích hoạt chức năng lấy 8 ký tự thành link free.fr</li><li style="text-transform: none !important;margin-bottom: 10px;">Bấm chữ G khi xem bài viết để tự bắt các loại link khác</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
