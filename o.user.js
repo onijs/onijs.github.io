@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			137
+// @version   			139
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -49,7 +49,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Bấm chữ F khi xem bài viết để kích hoạt chức năng lấy 8 ký tự thành link free.fr</li><li style="text-transform: none !important;margin-bottom: 10px;">Bấm chữ G khi xem bài viết để tự bắt các loại link khác</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Bật pop-up khi tải xuống</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
@@ -72,6 +72,36 @@ String.prototype.ismatch = function (regex) {
 String.prototype.isdomain = function(ismatch){const a =new URL(this.valueOf());const {host, hostname, pathname, port, protocol, search, hash} = a;if(hostname.split('.').length>2){ var mainhostname = `${hostname}`.split('.').slice(1).join('.').replace('.','\\.');} else {var mainhostname =`${hostname}`.replace('.','\\.');} return typeof this.indexOf === 'function' && mainhostname.indexOf(ismatch.replace('.','\\.')) === 0;}
 const hkparseUrl = (string, prop) =>  {const a =new URL(string);const {host, hostname, pathname, port, protocol, search, hash} = a;var mainhostname = `${hostname}`.split('.').slice(1).join(); const origin = `${protocol}//${hostname}${port.length ? `:${port}`:''}`;return prop ? eval(prop) : {origin, host, hostname, mainhostname, pathname, port, protocol, search, hash}}
 function insertAfter(referenceNode, newNode) {referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);}
+//________________________________________________________________________
+var    popupWindow,responseText;
+function drbscadpop(url, winName, w, h, scroll) {
+    LeftPosition = (screen.width) ? (screen.width - w) / 2 : 0;
+    TopPosition = (screen.height) ? (screen.height - h) / 2 : 0;
+    settings = 'height=' + h + ',width=' + w + ',top=' + TopPosition + ',left=' + LeftPosition + ',location=no,scrollbars=' + scroll + ',resizable';
+    popupWindow = window.open(url, winName, settings);
+    try{responseText = popupWindow.document.documentElement.innerHTML || popupWindow.document.documentElement.outerHTML;}catch(e){ responseText='';}
+
+                popupWindow.addEventListener('load', function(){
+                 try{responseText = popupWindow.document.documentElement.innerHTML || popupWindow.document.documentElement.outerHTML;}catch(e){ responseText='';}
+                if(responseText ==='<head></head><body></body>' || responseText===''){ popupWindow.close();}
+          
+                }, false);
+
+        
+                popupWindow.addEventListener('DOMContentLoaded', function(){
+                 try{responseText = popupWindow.document.documentElement.innerHTML || popupWindow.document.documentElement.outerHTML;}catch(e){ responseText='';}
+                if(responseText ==='<head></head><body></body>' || responseText===''){ popupWindow.close();}
+          
+                }, false);
+                  setTimeout(function(){if(popupWindow.location.href ==='about:blank' || popupWindow.location.href ===""){ popupWindow.close();}}, 3000);
+
+
+     
+    
+     
+}
+
+
 //________________________________________________________________________
 var onionJS = {
     pan567_com: function(){
@@ -196,6 +226,13 @@ var onionJS = {
 //________________________________________________________________________
     any_onion: function(){
 //_______________________________________________
+$( "body" ).on( "click", ".noautoload", function(e) {
+  if($(this).attr('href').match(/(https?\:\/\/)/ig) && $(this).attr('href') !=='JavaScript:void(0)' ){
+  e.preventDefault();
+  drbscadpop($(this).attr('href'),"_blank",600,300, "no");
+  }
+})
+//_______________________________________________
 $( "body" ).on( "click", ".hkautoload", function(e) {
   e.preventDefault();
 
@@ -204,19 +241,25 @@ $( "body" ).on( "click", ".hkautoload", function(e) {
 if($(this).attr('href').match(/free\.fr/)){
 var fileid = $(this).attr('href').substr($(this).attr('href').length - 8);
 //alert(fileid);
-var s= document.createElement('form'); s.target='_blank';
+var s= document.createElement('form'); s.target='print_popup'+fileid;
   s.className='ONLIYONESUV';
   s.setAttribute('method','post');
   s.setAttribute('action','http://dl.free.fr/_getfile.pl');
+  s.setAttribute('onsubmit',drbscadpop("about:blank","print_popup"+fileid,600,300, "no"));
   var i= document.createElement('input');
   i.name='file'; i.setAttribute('value','/'+fileid);
   s.appendChild(i);
   document.body.appendChild(s); s.submit();
  document.querySelectorAll('.ONLIYONESUV').forEach(el=>el.remove());
+
 } 
+  
+  
 if($(this).attr('href').match(/datafilehost\.com\/d/)){
 var newherf = $(this).attr('href').replace('https://www.datafilehost.com/d/','http://www.datafilehost.com/get.php?file=');
-  window.open(newherf);
+
+  drbscadpop(newherf,"_blank",600,300, "no")
+   
 
 
 }
