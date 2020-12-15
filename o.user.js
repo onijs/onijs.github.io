@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			140
+// @version   			141
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -262,6 +262,8 @@ var newherf = $(this).attr('href').replace('https://www.datafilehost.com/d/','ht
    
 
 
+} else {
+   drbscadpop($(this).attr('href'),"_blank",600,300, "no")
 }
 
 
