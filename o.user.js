@@ -30,7 +30,7 @@
 // @include		  *://*.histats.com/*
 // @include		  *://*.bestchange.com/*
 // @grant         GM_setClipboard
-// @grant         unsafeWindow
+// @grant         unsafeWindow 
 // @grant         window.close
 // @grant         window.open
 // @grant         window.focus
