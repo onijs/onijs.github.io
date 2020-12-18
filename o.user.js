@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			141
+// @version   			142
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -490,7 +490,7 @@ function newhtml(htm,pawc,justadd){
         }
         else if(curi && !curi.match(/(dlfree\.|dropperibhaerr2m\.onion\/file\/([a-z0-9]{3})\/$|viewtopic|posting|\?file\=\/l\?file\=\/)/i) && curi!='dl.free.fr' && curi!='dl.free.fr.'  && curi!='dl.free' && curi!='dl.free?' && curi!='DL.free' && curi!='http://matrixtxri745dfw.onion/neo/uploa' && curi!='http://boystownbezgvykp.onion/upload.html'  && curi!='http://cryptoupei2am6si.onion/index.php' && curi!='http://twlba5j7oo5g4kj5.onion/' && curi!='http://uoxqi4lrfqztugili7zzgygibs4xstehf5hohtkpyqcoyryweypzkwid.onion/' ){
                                 if(!curi.match(/http(s)?/i)) {curi='http://'+curi;}
-                                if (curi.match(/free\.fr/)){ var classr='hkautoload';} else{var classr='noautoload';}
+                                if (curi.match(/free\.fr/)){ var classr='hkautoload';} else{var classr='hkautoload';}
           htmm+='<a class="'+classr+'" style="display: block; font-size: 250%; color: #03A9F4;width: fit-content;" href="'+(curi)+'" target="_blank">'+(curi)+'</a>';
         }
         
