@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			142
+// @version   			139
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -30,7 +30,7 @@
 // @include		  *://*.histats.com/*
 // @include		  *://*.bestchange.com/*
 // @grant         GM_setClipboard
-// @grant         unsafeWindow 
+// @grant         unsafeWindow
 // @grant         window.close
 // @grant         window.open
 // @grant         window.focus
@@ -262,8 +262,6 @@ var newherf = $(this).attr('href').replace('https://www.datafilehost.com/d/','ht
    
 
 
-} else {
-   drbscadpop($(this).attr('href'),"_blank",600,300, "no")
 }
 
 
@@ -277,7 +275,7 @@ var totalurl=[],vocs=0;
             var vpost = new DOMParser().parseFromString(vvst, "text/html");
             $(vpost).find('blockquote').remove();
             $(vpost).find('.smilies').remove();
-            var inb= $(vpost).contents().text().match(/(\b|\s)((?!Password|dlfree|Backup|Torturer|Download|Link)([a-z0-9A-Z]{8}))(\r|\n|\s|\r\n|\n\r)/ig);
+            var inb= $(vpost).contents().text().match(/(\b|\s)((?!Password|dlfree|Backup|Torturer|Download|Link)([a-z0-9A-Z]{8,9}))(\r|\n|\s|\r\n|\n\r)/ig);
                    if(inb){ totalurl=inb.map(function (i) {var i=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=i.substring(0, 8);if(ic.length==8 && !ic.match(/(bastards|anything|although|searched|Stalking|archives|pinpoint|consider|slightly|prevents|preserve|previous|compared|location|reported|pleasure|jgbp([0-9]{4})|probably|separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){
                     if(ic.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/g) || ic.match(/(?=.*\d)(?=.*[a-z])/g) || ic.match(/(?=.*\d)(?=.*[A-Z])/g) || ic.match(/(?=.*[a-z])(?=.*[A-Z])/g) ){
                      return 'http://dl.free.fr/getfile.pl?file=/' + ic;
@@ -339,7 +337,7 @@ var totalurl=[],vocs=0;
           }
 }
           if(kbpg=='F'){
-            var inb= $(vpost).contents().text().match(/(\b|\s|\r|\n|\s|\r\n|\n\r)((?!Password|dlfree|backflip|Backup|Torturer|Download|Link)([a-z0-9A-Z]{8,9})(\W|$|\s|\n|\r|\r\n|\n\r))/ig);
+            var inb= $(vpost).contents().text().match(/(\b|\s|\r|\n|\s|\r\n|\n\r)((?!Password|dlfree|Backup|Torturer|Download|Link)([a-z0-9A-Z]{8})(\W|$|\s|\n|\r|\r\n|\n\r))/ig);
                    if(inb && kbpg=='F'){ totalurl=inb.map(function (i) {var i=i.replace(/(\r|\n|\s|\r\n|\n\r)/ig,''); var ic=i.substring(0, 8);if(ic.length==8 && !ic.match(/(Khortyts|Intervie|Subtitle|Stalking|multipar|Hardcode|bastards|anything|although|searched|archives|pinpoint|consider|slightly|prevents|preserve|previous|compared|location|reported|pleasure|jgbp([0-9]{4})|probably|separate|Handsome|Japanese|cloaking|([0-9]{8})|P([0-9]{7})|included|prostate|DSCF|sessions|football|downfall|rewarded|favorite|original)/ig)){
                       if(ic.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/g) || ic.match(/(?=.*\d)(?=.*[a-z])/g) || ic.match(/(?=.*\d)(?=.*[A-Z])/g) || ic.match(/(?=.*[a-z])(?=.*[A-Z])/g) ){return  'http://dl.free.fr/getfile.pl?file=/' + ic;}
                      
@@ -490,7 +488,7 @@ function newhtml(htm,pawc,justadd){
         }
         else if(curi && !curi.match(/(dlfree\.|dropperibhaerr2m\.onion\/file\/([a-z0-9]{3})\/$|viewtopic|posting|\?file\=\/l\?file\=\/)/i) && curi!='dl.free.fr' && curi!='dl.free.fr.'  && curi!='dl.free' && curi!='dl.free?' && curi!='DL.free' && curi!='http://matrixtxri745dfw.onion/neo/uploa' && curi!='http://boystownbezgvykp.onion/upload.html'  && curi!='http://cryptoupei2am6si.onion/index.php' && curi!='http://twlba5j7oo5g4kj5.onion/' && curi!='http://uoxqi4lrfqztugili7zzgygibs4xstehf5hohtkpyqcoyryweypzkwid.onion/' ){
                                 if(!curi.match(/http(s)?/i)) {curi='http://'+curi;}
-                                if (curi.match(/free\.fr/)){ var classr='hkautoload';} else{var classr='hkautoload';}
+                                if (curi.match(/free\.fr/)){ var classr='hkautoload';} else{var classr='noautoload';}
           htmm+='<a class="'+classr+'" style="display: block; font-size: 250%; color: #03A9F4;width: fit-content;" href="'+(curi)+'" target="_blank">'+(curi)+'</a>';
         }
         
