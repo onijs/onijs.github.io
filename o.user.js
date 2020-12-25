@@ -49,7 +49,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Bật pop-up khi tải xuống</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Cải thiện khả năng nhận dạng ảnh demo</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
@@ -495,7 +495,8 @@ function newhtml(htm,pawc,justadd){
           
           var curi=htm[i][c];
         if(curi && curi.match(/(image|jpg|jpeg|png)/i)){
-          htmm+='<img onerror="this.parentNode.removeChild(this);" style="margin: 10px auto 15px;display:inline-grid;" border="0" src="'+(curi)+'" width="33%"/>';
+          if(curi.match(/(keptarhely\.eu\/thumbs)/ig)){curi = curi.replace('thumbs','images').replace('jpg','jpeg');}
+          htmm+='<img onerror="this.parentNode.removeChild(this);" style="margin: 10px auto 15px;display:inline-grid;max-width:33%" border="0" src="'+(curi)+'"/>';
         }
         else if(curi && !curi.match(/(dlfree\.|dropperibhaerr2m\.onion\/file\/([a-z0-9]{3})\/$|viewtopic|posting|\?file\=\/l\?file\=\/)/i) && curi!='dl.free.fr' && curi!='dl.free.fr.'  && curi!='dl.free' && curi!='dl.free?' && curi!='DL.free' && curi!='http://matrixtxri745dfw.onion/neo/uploa' && curi!='http://boystownbezgvykp.onion/upload.html'  && curi!='http://cryptoupei2am6si.onion/index.php' && curi!='http://twlba5j7oo5g4kj5.onion/' && curi!='http://uoxqi4lrfqztugili7zzgygibs4xstehf5hohtkpyqcoyryweypzkwid.onion/' ){
                                 if(!curi.match(/http(s)?/i)) {curi='http://'+curi;}
@@ -591,7 +592,7 @@ function newhtml(htm,pawc,justadd){
             $(vpost).find('.smilies').remove();
             
             var imageurl = $(vpost).find('img[src*="imageupload"]').attr('src');
-           var uri= $(vpost).contents().html().match(/((http\:\/\/)?(https\:\/\/)?(www\.)?([a-z0-9A-Z\-\_\.]+)(\.com|\.net|\.org|\.run|\.ru|\.to|\.nl|\.io|\.li|\.fr|\.is|\.cc\|\.st|\.ro|\.onion)((?!\/viewtopic\.|dlfree\.|\/show\?i\=)([a-z0-9\.\_\-\/\!\@\#\$\%\^\&\*\(\)\=\+\*\;\:\?]+)))/ig);
+           var uri= $(vpost).contents().html().match(/((ext\/dmzx\/imageupload\/)([a-z0-9\/\_\-\.]+))|((http\:\/\/)?(https\:\/\/)?(www\.)?([a-z0-9A-Z\-\_\.]+)(\.com|\.eu|\.net|\.org|\.run|\.ru|\.to|\.nl|\.io|\.li|\.fr|\.is|\.cc\|\.st|\.ro|\.onion)((?!\/viewtopic\.|dlfree\.|\/show\?i\=)([a-z0-9\.\_\-\/\!\@\#\$\%\^\&\*\(\)\=\+\*\;\:\?]+)))/ig);
               if($(vpost).contents().html().match(/(getfile\.pl)/i)){uri=uri.map(function (namp) {if(namp.match(/(getfile\.pl)/i) && namp.length>7){return 'http://dl.free.fr/getfile.pl?file=/' + namp.substr(namp.length - 8);} else{ return namp;}});}
      
          
