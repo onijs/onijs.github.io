@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			146
+// @version   			147
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
