@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			147
+// @version   			148
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -254,16 +254,15 @@ var s= document.createElement('form'); s.target='print_popup'+fileid;
   document.body.appendChild(s); s.submit();
  document.querySelectorAll('.ONLIYONESUV').forEach(el=>el.remove());
 
-} 
-  
-  
-if($(this).attr('href').match(/datafilehost\.com\/d/)){
+} else if($(this).attr('href').match(/datafilehost\.com\/d/)){
 var newherf = $(this).attr('href').replace('https://www.datafilehost.com/d/','http://www.datafilehost.com/get.php?file=');
 
   drbscadpop(newherf,"_blank",600,300, "no")
    
 
 
+} else {
+ drbscadpop($(this).attr('href'),"_blank",600,300, "no")
 }
 
 
