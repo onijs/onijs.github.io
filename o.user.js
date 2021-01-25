@@ -1,5 +1,5 @@
 // ==UserScript==
-// @version   			148
+// @version   			149
 // @name         DeepAI.onion
 // @description  Onion sites javascript supported.
 // @namespace   HOAKHUYA.onion
@@ -49,7 +49,7 @@
 // @run-at      document-body
 // ==/UserScript==
 /* String Prototype */
-//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Cải thiện khả năng nhận dạng ảnh demo</li>
+//UDT#!<li style="text-transform: none !important;margin-bottom: 10px;">Sửa lổi mở trang trắng</li>
 //DUR#!https://bit.ly/onionjs
 
 GM_addStyle (GM_getResourceText ("jqUI_CSS"));
@@ -486,7 +486,7 @@ function newhtml(htm,pawc,justadd){
     beforepw='';
     var passw = newpass(pawc);
     if (title.match(/re\:\s/i) || fepage>1){var tipdostart=parseInt(fepage);var countdpaeg = fepage;var addtitle="Trang "+(++countdpaeg); var linkaddstart='&start='+(tipdostart*8);} else{var addtitle='';var linkaddstart='';}
-    var trhtmm='<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><a style="width: fit-content;" onclick="window.open(\''+(listthread[nowget])+linkaddstart+'\', \'_blank\', \'toolbar=yes, location=yes, status=yes, menubar=yes, scrollbars=yes\');" href="JavaScript:void(0)" target="_blank">'+title+' '+addtitle+'</a></span>';
+    var trhtmm='<div class="newcss" style="margin-bottom: 20px; border-bottom: #ff0000 solid 2px; padding-bottom: 29px;"><span style="display:block;font-family: Arial, Helvetica, sans-serif; font-weight: bold; text-transform: uppercase; border-bottom: 1px solid transparent; margin-bottom: 15px; padding-bottom: 2px; font-size: 2.05em; margin-top: 10px;"><a style="width: fit-content;" onclick="window.open(\''+(listthread[nowget])+linkaddstart+'\', \'_blank\'); return false;" href="javascript:void(0)" target="_blank">'+title+' '+addtitle+'</a></span>';
 
     for (var i = 0; i < htm.length; i++) {
       
